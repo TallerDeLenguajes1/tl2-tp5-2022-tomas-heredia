@@ -10,7 +10,7 @@ namespace MyApp
     public abstract class Persona
     {
         
-        public int id {get; set;}
+        public int id; 
         
         public string nombre{get; set;}
        
@@ -23,6 +23,9 @@ namespace MyApp
             nombre = n;
             descripcion = des;
             telefono = t;
+        }
+        public void set_id(int id){
+            this.id = id;
         }
         public Persona(){}
 

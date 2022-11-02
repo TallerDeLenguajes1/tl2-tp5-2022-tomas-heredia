@@ -30,8 +30,13 @@ namespace LectorCSV
             
             
         } */
+        public void cargarPedido(Pedido pedido){
+            string padth = @"Models\Pedidos.csv";
+            string cadena = $"{pedido.Nro},{pedido.Obs},{pedido.cliente},{pedido.estado}\n";
+            System.IO.File.AppendAllText(padth,cadena);
+        }
         public void cargarCadete(Cadete cadete){
-            string padth = @"F:\taller2\tl2-tp4-2022-tomas-heredia\tp\TP6\Models\Cadetes.csv";
+            string padth = @"Cadetes.csv";
             string cadena = $"{cadete.id},{cadete.nombre},{cadete.descripcion},{cadete.telefono}\n";
             System.IO.File.AppendAllText(padth,cadena);
         }
@@ -64,7 +69,28 @@ namespace LectorCSV
             while ((Linea = StrReader.ReadLine()) != null)
             {
                 string[] Fila = Linea.Split(',');
-                Cadete nuevo= new Cadete(Fila[1],Fila[2],Convert.ToInt32(Fila[3]));
+                Cadete nuevo= new Cadete(Convert.ToInt32(Fila[0]),Fila[1],Fila[2],Convert.ToInt32(Fila[3]));
+                LecturaDelArchivo.Add(nuevo);
+            }
+            
+            StrReader.Close();
+            return LecturaDelArchivo;
+        }
+
+         public List<Pedido> LeerCsvPedido( string nombreDeArchivo)
+        {
+            FileStream MiArchivo = new FileStream(nombreDeArchivo, FileMode.Open);
+            StreamReader StrReader = new StreamReader(MiArchivo);
+
+            string Linea = "";
+            List<Pedido> LecturaDelArchivo = new List<Pedido>();
+
+            while ((Linea = StrReader.ReadLine()) != null)
+            {
+                string[] Fila = Linea.Split(',');
+                string[] cliente_aux = Fila[2].Split(',');
+                Cliente nuevo_cliente = new Cliente(Convert.ToInt32(cliente_aux[0]),cliente_aux[1],cliente_aux[2],Convert.ToInt32(cliente_aux[3]),cliente_aux[4]);
+                Pedido nuevo= new Pedido(Convert.ToInt32(Fila[0]),Fila[1],nuevo_cliente,Fila[3]);
                 LecturaDelArchivo.Add(nuevo);
             }
             

@@ -8,11 +8,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyApp;
 using LectorCSV;
+using ViewModels;
+using Mappers;
 
 namespace TP6.Controllers
 {
     public class CadeteController : Controller
     {
+        private int id = 1;
         static List<Cadete> cadetes = new List<Cadete>();
         private readonly ILogger<CadeteController> _logger;
 
@@ -22,7 +25,8 @@ namespace TP6.Controllers
             // this.cadetes = cadetes;
         }
 
-        [HttpGet]
+        
+        
 
         public IActionResult Index()
         {
@@ -33,14 +37,19 @@ namespace TP6.Controllers
         [HttpPost]
         public IActionResult addCadete(string n, string des, int t)
         {
-            Cadete cadete_ = new Cadete(n, des, t);
+            CadeteViewModel nuevo = new CadeteViewModel(id,n,des,t);
+            id ++;
+            MapperViewModel mapper = new MapperViewModel();
+            Cadete cadete_ = mapper.GetCadete(nuevo);
 
             HelperCsv archivo = new HelperCsv();
 
             archivo.cargarCadete(cadete_);
 
-            cadetes = archivo.LeerCsvCadete(@"F:\taller2\tl2-tp4-2022-tomas-heredia\tp\TP6\Models\Cadetes.csv");
-            return View("ListarCadetes", cadetes);
+            cadetes = archivo.LeerCsvCadete(@"Models\Cadetes.csv");
+
+            List<CadeteViewModel> cadetesView = mapper.GetListViewModel(cadetes);
+            return View("ListarCadetes", cadetesView);
 
         }
 

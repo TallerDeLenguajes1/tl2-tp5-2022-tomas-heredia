@@ -7,16 +7,16 @@ namespace MyApp
 {
     public class Cadete: Persona
     {
-        static int i = 1;
+        
 
         public List<Pedido> pedidos = new List<Pedido>();
 
-        public Cadete(string n, string des, int t, List<Pedido> p):base( i,  n,  des,  t){
-            i++;
+        public Cadete(int i, string n, string des, int t, List<Pedido> p):base( i,  n,  des,  t){
+            
             pedidos = p;
         }
-        public Cadete( string n, string des, int t):base( i,  n,  des,  t){
-            i ++;
+        public Cadete(int i, string n, string des, int t):base( i,  n,  des,  t){
+            
         }
         
         public float JornalACobrar(){
