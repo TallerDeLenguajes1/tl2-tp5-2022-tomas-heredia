@@ -1,0 +1,17 @@
+
+
+@{
+    ViewData["Title"] = "Cadete Page";
+}
+
+<div class = "text-center">
+    <form asp-controller="Cadete" asp-action= "addCadete" method="post">
+
+        <legend>"Registrar Cadete"</legend>
+        
+        <div>"Nombre" <input type="text" name="n" required></div>
+        <div>"Direccion"<input type="text" name= "des" required></div>
+        <div>"Telefono"<input type="number" name="t" required></div>
+        <div><input type="submit" value="Cargar" name="car"><input type="reset" value="Borrar" name="res"></div>
+    </form>
+</div>
