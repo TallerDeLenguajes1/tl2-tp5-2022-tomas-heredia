@@ -48,15 +48,15 @@ namespace TP6.Controllers
 
             cadetes = archivo.LeerCsvCadete(@"Models\Cadetes.csv");
 
-            List<CadeteViewModel> cadetesView = mapper.GetListViewModel(cadetes);
-            return View("ListarCadetes", cadetesView);
+            
+            return View("ListarCadetes", cadetes);
 
         }
 
         [HttpPost]
         public IActionResult bajaCadete(int id){
             HelperCsv archivo = new HelperCsv();
-            archivo.Eliminar(id);
+            archivo.EliminarCadete(id);
         
             return View();
         }

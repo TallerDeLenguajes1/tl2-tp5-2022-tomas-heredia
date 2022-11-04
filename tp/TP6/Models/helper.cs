@@ -98,11 +98,11 @@ namespace LectorCSV
             return LecturaDelArchivo;
         }
 
-        public void Eliminar(int id)
+        public void EliminarCadete(int id)
         {
             List<Cadete> cadetes = new List<Cadete>();
-            cadetes = this.LeerCsvCadete(@"F:\taller2\tl2-tp4-2022-tomas-heredia\tp\TP6\Models\Cadetes.csv");
-            System.IO.File.WriteAllText(@"F:\taller2\tl2-tp4-2022-tomas-heredia\tp\TP6\Models\Cadetes.csv","");
+            cadetes = this.LeerCsvCadete(@"Models\Cadetes.csv");
+            System.IO.File.WriteAllText(@"Models\Cadetes.csv","");
             foreach (var item in cadetes)
             {
                 if (id != item.id)
@@ -112,6 +112,19 @@ namespace LectorCSV
             }
         }
 
+        public void EliminarPedido(int id)
+        {
+            List<Pedido> pedidos = new List<Pedido>();
+            pedidos = this.LeerCsvPedido(@"Models\Pedidos.csv");
+            System.IO.File.WriteAllText(@"Models\Pedidos.csv","");
+            foreach (var item in pedidos)
+            {
+                if (id != item.Nro)
+                {
+                    this.cargarPedido(item);
+                }
+            }
+        }
         /* public void archivoCSV (List<Alumno> ListadoElementos, string NombreArchivo){
         
 

@@ -6,7 +6,14 @@
 
 
  <h2>@ViewData["Resultado"]</h2>
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div >
+    <form asp-controller="Pedido" asp-action= "addPedido" method="post">
+
+        <legend>"Registrar Pedido"</legend>
+        
+        <div>"Observacion" <input type="text" name="ob" required></div>
+        <div>"Cliente ID"<input type="number" name= "c" required></div>
+        <div>"estado"<input type="number" name="e" required></div>
+        <div><input type="submit" value="Cargar" name="car"><input type="reset" value="Borrar" name="res"></div>
+    </form>
 </div>

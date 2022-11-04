@@ -12,5 +12,6 @@ namespace MyApp
         public Cliente(int i, string n, string des, int t, string d):base( i,  n,  des,  t){
             DatosReferenciaDireccion = d;
         }
+        public Cliente(){}
     }
 }
