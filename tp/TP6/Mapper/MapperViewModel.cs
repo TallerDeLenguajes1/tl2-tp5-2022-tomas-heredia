@@ -32,12 +32,12 @@ namespace Mappers
         }
         
         public Pedido GetPedido(PedidoVIewModels pedido){
-            Pedido nuevo = new Pedido(pedido.Nro,pedido.Obs, pedido.cliente, pedido.estado);
+            Pedido nuevo = new Pedido(pedido.Nro,pedido.Obs, pedido.id_cliente, pedido.estado,pedido.id_cadete);
             return nuevo;
         }
 
         public PedidoVIewModels GetPedidoVIewModels(Pedido pedido){
-            PedidoVIewModels nuevo = new PedidoVIewModels(pedido.Nro,pedido.Obs, pedido.cliente, pedido.estado);
+            PedidoVIewModels nuevo = new PedidoVIewModels(pedido.Nro,pedido.Obs, pedido.id_cliente, pedido.estado,pedido.id_cadete);
             return nuevo;
         }
     }

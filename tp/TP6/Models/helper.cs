@@ -32,7 +32,7 @@ namespace LectorCSV
         } */
         public void cargarPedido(Pedido pedido){
             string padth = @"Models\Pedidos.csv";
-            string cadena = $"{pedido.Nro},{pedido.Obs},{pedido.cliente},{pedido.estado}\n";
+            string cadena = $"{pedido.Nro},{pedido.Obs},{pedido.id_cadete},{pedido.estado},{pedido.id_cadete}\n";
             System.IO.File.AppendAllText(padth,cadena);
         }
         public void cargarCadete(Cadete cadete){
@@ -89,8 +89,7 @@ namespace LectorCSV
             {
                 string[] Fila = Linea.Split(',');
                 string[] cliente_aux = Fila[2].Split(',');
-                Cliente nuevo_cliente = new Cliente(Convert.ToInt32(cliente_aux[0]),cliente_aux[1],cliente_aux[2],Convert.ToInt32(cliente_aux[3]),cliente_aux[4]);
-                Pedido nuevo= new Pedido(Convert.ToInt32(Fila[0]),Fila[1],nuevo_cliente,Fila[3]);
+                Pedido nuevo= new Pedido(Convert.ToInt32(Fila[0]),Fila[1],Convert.ToInt32(Fila[2]),Fila[3],Convert.ToInt32(Fila[4]));
                 LecturaDelArchivo.Add(nuevo);
             }
             

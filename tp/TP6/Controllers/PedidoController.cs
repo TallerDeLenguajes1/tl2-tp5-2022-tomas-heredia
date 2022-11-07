@@ -27,20 +27,11 @@ namespace TP6.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AltaPedido(int n, string ob, int c, string e)
+        public IActionResult AltaPedido(int n, string ob, int c, string e, int i)
         {
             HelperCsv archivo = new HelperCsv();
-            List<Cliente> clientes = new List<Cliente>();
-            clientes = archivo.LeerCsvCliente(@"Models\Clientes.csv");
-            Cliente cliente = new Cliente();
-            foreach (var item in clientes)
-            {
-                if (c == item.id)
-                {
-                    cliente = item;
-                }
-            }
-            PedidoVIewModels model = new PedidoVIewModels(id,ob,cliente,e);
+            
+            PedidoVIewModels model = new PedidoVIewModels(id,ob,c,e,i);
             id ++;
 
             MapperViewModel mapper = new MapperViewModel();

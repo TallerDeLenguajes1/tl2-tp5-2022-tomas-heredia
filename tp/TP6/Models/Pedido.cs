@@ -14,12 +14,14 @@ namespace MyApp
         
         public string Obs{get; set;}
        
-        public Cliente cliente{get; set;}
+       public int id_cadete{get; set;}
+        public int id_cliente{get; set;}
         public string estado{get; set;} 
-        public Pedido(int n, string ob, Cliente c, string e){
+        public Pedido(int n, string ob, int c, string e, int id_cadete){
             Nro = n;
+            this.id_cadete = id_cadete;
             Obs = ob;
-            cliente = c;
+            id_cliente = c;
             estado = e;
         }
     }
