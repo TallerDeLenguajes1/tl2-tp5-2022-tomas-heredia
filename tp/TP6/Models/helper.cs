@@ -4,6 +4,10 @@ using System.IO;
 using System.Text;
 using MyApp;
 
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Data;
+using Microsoft.Data.Sqlite;
 
 namespace LectorCSV
 {
@@ -30,6 +34,28 @@ namespace LectorCSV
             
             
         } */
+
+        //bace de datos
+         public bool SubirCadetes(Cadete Cadete){
+            conexion.Open();
+            SqliteCommand insertar = new("INSERT INTO cadetes (Nombre,Direccion,Telefono,Id) VALUES (@nom, @dire, @tel, @id_cad)", conexion);
+            insertar.Parameters.AddWithValue("@nom", Cadete.nombre);
+            insertar.Parameters.AddWithValue("@dire", Cadete.direccion);
+            insertar.Parameters.AddWithValue("@tel", Cadete.telefono);
+            insertar.Parameters.AddWithValue("@id_cad", Cadete.id);
+             try
+            {
+                insertar.ExecuteReader();
+                conexion.Close();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                conexion.Close();
+                return false;
+            }
+        }
         public void cargarPedido(Pedido pedido){
             string padth = @"Models\Pedidos.csv";
             string cadena = $"{pedido.Nro},{pedido.Obs},{pedido.id_cadete},{pedido.estado},{pedido.id_cadete}\n";
@@ -37,7 +63,7 @@ namespace LectorCSV
         }
         public void cargarCadete(Cadete cadete){
             string padth = @"Cadetes.csv";
-            string cadena = $"{cadete.id},{cadete.nombre},{cadete.descripcion},{cadete.telefono}\n";
+            string cadena = $"{cadete.id},{cadete.nombre},{cadete.direccion},{cadete.telefono}\n";
             System.IO.File.AppendAllText(padth,cadena);
         }
 
@@ -77,6 +103,28 @@ namespace LectorCSV
             return LecturaDelArchivo;
         }
 
+        //Base de datos
+        public bool SubirPedido(Pedido Pedido){
+            conexion.Open();
+            SqliteCommand insertar = new("INSERT INTO pedidos (Obs,Id_cliente,Id_cadete,Estado) VALUES (@obs, @idcli, @idca, @est)", conexion);
+            insertar.Parameters.AddWithValue("@obs", Pedido.Obs);
+            insertar.Parameters.AddWithValue("@idcli", Pedido.id_cliente);
+            insertar.Parameters.AddWithValue("@idca", Pedido.id_cadete);
+            insertar.Parameters.AddWithValue("est",Pedido.estado);
+             try
+            {
+                insertar.ExecuteReader();
+                conexion.Close();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                conexion.Close();
+                return false;
+            }
+
+        }
          public List<Pedido> LeerCsvPedido( string nombreDeArchivo)
         {
             FileStream MiArchivo = new FileStream(nombreDeArchivo, FileMode.Open);
@@ -97,20 +145,48 @@ namespace LectorCSV
             return LecturaDelArchivo;
         }
 
-        public void EliminarCadete(int id)
-        {
-            List<Cadete> cadetes = new List<Cadete>();
-            cadetes = this.LeerCsvCadete(@"Models\Cadetes.csv");
-            System.IO.File.WriteAllText(@"Models\Cadetes.csv","");
-            foreach (var item in cadetes)
+        //base de datos
+        public bool EliminarCadetes(int ID){
+            conexion.Open();
+            SqliteCommand select = new SqliteCommand("DELETE FROM Cadete WHERE id = @Id", conexion);
+            select.Parameters.AddWithValue("@id",Int32.Parse(ID));
+             try
             {
-                if (id != item.id)
-                {
-                    this.cargarCadete(item);
-                }
+                select.ExecuteReader();
+                conexion.Close();
+                return true;
             }
-        }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                conexion.Close();
+                return false;
+            }
+           
 
+
+        } 
+        //base de datos
+        public bool EliminarPedido(string Nro){
+                    conexion.Open();
+                    SqliteCommand select = new SqliteCommand("DELETE FROM pedido WHERE Nro = @id", conexion);
+                    select.Parameters.AddWithValue("@id",Int32.Parse(Nro));
+                    try
+                    {
+                        select.ExecuteReader();
+                        conexion.Close();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        conexion.Close();
+                        return false;
+                    }
+                
+
+
+                } 
         public void EliminarPedido(int id)
         {
             List<Pedido> pedidos = new List<Pedido>();

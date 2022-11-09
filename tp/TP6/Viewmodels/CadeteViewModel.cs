@@ -9,14 +9,14 @@ namespace ViewModels
         [Required] [StringLength(1000)] 
         public string nombre{get;set;}
         [Required] [StringLength(1000)] 
-        public string descripcion{get;set;}
+        public string direccion{get;set;}
         [Phone]
         public int telefono{get;set;}
 
-        public CadeteViewModel(int td, string nombre, string descripcion, int telefono){
+        public CadeteViewModel(int td, string nombre, string direccion, int telefono){
             this.id = id;
             this.nombre = nombre;
-            this.descripcion =descripcion;
+            this.direccion =direccion;
             this.telefono = telefono;
         }
         public void set_id(int id){

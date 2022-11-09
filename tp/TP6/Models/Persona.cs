@@ -15,13 +15,13 @@ namespace MyApp
         public string nombre{get; set;}
        
 
-        public string descripcion{get; set;}
+        public string direccion{get; set;}
        
         public int telefono{get; set;}
         public Persona(int i, string n, string des, int t){
             id = i;
             nombre = n;
-            descripcion = des;
+            direccion = des;
             telefono = t;
         }
         public void set_id(int id){

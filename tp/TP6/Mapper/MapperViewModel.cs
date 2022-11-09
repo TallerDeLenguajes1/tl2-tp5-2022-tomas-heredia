@@ -10,13 +10,13 @@ namespace Mappers
         
         
         public Cadete GetCadete(CadeteViewModel cad){
-            Cadete nuevo = new Cadete(cad.id,cad.nombre,cad.descripcion,cad.telefono);
+            Cadete nuevo = new Cadete(cad.id,cad.nombre,cad.direccion,cad.telefono);
             nuevo.set_id(cad.id);
             return nuevo;
         }
 
         public CadeteViewModel GetCadeteViewModel(Cadete cad){
-            CadeteViewModel nuevo = new CadeteViewModel(cad.id,cad.nombre,cad.descripcion,cad.telefono);
+            CadeteViewModel nuevo = new CadeteViewModel(cad.id,cad.nombre,cad.direccion,cad.telefono);
             return nuevo;
         }
 
@@ -24,7 +24,7 @@ namespace Mappers
             List<CadeteViewModel> nueva_lista = new List<CadeteViewModel>();
             foreach (var item in cadetes)
             {
-                CadeteViewModel nuevo = new CadeteViewModel(item.id, item.nombre,item.descripcion,item.telefono);
+                CadeteViewModel nuevo = new CadeteViewModel(item.id, item.nombre,item.direccion,item.telefono);
                 nueva_lista.Add(nuevo);
 
             }
