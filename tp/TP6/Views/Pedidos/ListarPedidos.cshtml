@@ -12,3 +12,17 @@
         
     </form>
 }
+
+@foreach (var item in Model)
+{
+    <h2>@item.Nro</h2>
+    <h2>@item.</h2>   
+    <h2>@item.estado</h2> 
+    <h2>@item.Obs</h2> 
+    <form asp-controller="Cadete" asp-action= "cambioCadete" method="post">
+        <input type="number" value=@item.Nro hidden>
+        <input type="number" value=@item.id_cadete hidden>
+        <input type="submit" value="Modificar">
+        
+    </form>
+}

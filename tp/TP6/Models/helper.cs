@@ -15,7 +15,7 @@ namespace LectorCSV
     public class HelperCsv
     {
         //para bace de datos
-        string conexion = "Data Source=datos.db;Cache=Shared"  ;
+        string CadenaDeConexion = "Data Source=datos.db;Cache=Shared"  ;
         //usar este
 
         /* public void EscribirLinea( List<Alumno> ListadoElementos,string ruta)
@@ -39,6 +39,7 @@ namespace LectorCSV
 
         //bace de datos
          public bool SubirCadetes(Cadete Cadete){
+            
             conexion.Open();
             SqliteCommand insertar = new("INSERT INTO cadetes (Nombre,Direccion,Telefono,Id) VALUES (@nom, @dire, @tel, @id_cad)", conexion);
             insertar.Parameters.AddWithValue("@nom", Cadete.nombre);
@@ -201,6 +202,21 @@ namespace LectorCSV
                     this.cargarPedido(item);
                 }
             }
+        }
+
+        public void cambiarCadete(int nro, int id_cadete){
+            List<Pedido> pedidos = new List<Pedido>();
+            pedidos = this.LeerCsvPedido(@"Models\Pedidos.csv");
+            System.IO.File.WriteAllText(@"Models\Pedidos.csv","");
+            foreach (var item in pedidos)
+            {
+                if (nro != item.Nro)
+                {
+                    item.CanbiarCadete(id_cadete);
+                }
+                this.cargarPedido(item);
+            }
+
         }
         /* public void archivoCSV (List<Alumno> ListadoElementos, string NombreArchivo){
         

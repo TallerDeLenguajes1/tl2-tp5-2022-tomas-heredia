@@ -53,5 +53,11 @@ namespace TP6.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult cambioCadete(int Nro, int id_cadete){
+            HelperCsv archivo = new HelperCsv();
+            archivo.cambiarCadete(Nro, id_cadete);
+            return View();
+        }
     }
 }

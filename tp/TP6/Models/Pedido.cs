@@ -24,5 +24,8 @@ namespace MyApp
             id_cliente = c;
             estado = e;
         }
+        public void CanbiarCadete(int id){
+            id_cadete = id;
+        }
     }
 }
