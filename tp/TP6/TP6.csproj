@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference include = "Microsoft.EntityFrameworkCore.sqlite" Versio="3.1.0"/>
+    <PackageReference Include = "Microsoft.EntityFrameworkCore.sqlite" Versio="3.1.0"/>
+    <Content Include="bases/datos.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+
 </Project>

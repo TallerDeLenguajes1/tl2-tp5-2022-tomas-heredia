@@ -15,7 +15,7 @@ namespace LectorCSV
     public class HelperCsv
     {
         //para bace de datos
-        string CadenaDeConexion = "Data Source= datos/datos.db;Cache=Shared"  ;
+        string connectionString = "Data Source= bases/datos.db;Cache=Shared"  ;
         //usar este
 
         /* public void EscribirLinea( List<Alumno> ListadoElementos,string ruta)
@@ -39,25 +39,31 @@ namespace LectorCSV
 
         //bace de datos
          public bool SubirCadetes(Cadete Cadete){
+
+            using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+            {
+                conexion.Open();
+                
+                SqliteCommand insertar = new("INSERT INTO cadetes (Nombre,Direccion,Telefono,Id) VALUES (@nom, @dire, @tel, @id_cad)", conexion);
+                insertar.Parameters.AddWithValue("@nom", Cadete.nombre);
+                insertar.Parameters.AddWithValue("@dire", Cadete.direccion);
+                insertar.Parameters.AddWithValue("@tel", Cadete.telefono);
+                insertar.Parameters.AddWithValue("@id_cad", Cadete.id);
+                try
+                {
+                    insertar.ExecuteReader();
+                    conexion.Close();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    conexion.Close();
+                    return false;
+                }
             
-            conexion.Open();
-            SqliteCommand insertar = new("INSERT INTO cadetes (Nombre,Direccion,Telefono,Id) VALUES (@nom, @dire, @tel, @id_cad)", conexion);
-            insertar.Parameters.AddWithValue("@nom", Cadete.nombre);
-            insertar.Parameters.AddWithValue("@dire", Cadete.direccion);
-            insertar.Parameters.AddWithValue("@tel", Cadete.telefono);
-            insertar.Parameters.AddWithValue("@id_cad", Cadete.id);
-             try
-            {
-                insertar.ExecuteReader();
-                conexion.Close();
-                return true;
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                conexion.Close();
-                return false;
-            }
+
         }
         public void cargarPedido(Pedido pedido){
             string padth = @"Models\Pedidos.csv";
@@ -108,23 +114,28 @@ namespace LectorCSV
 
         //Base de datos
         public bool SubirPedido(Pedido Pedido){
-            conexion.Open();
-            SqliteCommand insertar = new("INSERT INTO pedidos (Obs,Id_cliente,Id_cadete,Estado) VALUES (@obs, @idcli, @idca, @est)", conexion);
-            insertar.Parameters.AddWithValue("@obs", Pedido.Obs);
-            insertar.Parameters.AddWithValue("@idcli", Pedido.id_cliente);
-            insertar.Parameters.AddWithValue("@idca", Pedido.id_cadete);
-            insertar.Parameters.AddWithValue("est",Pedido.estado);
-             try
+
+            using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
-                insertar.ExecuteReader();
-                conexion.Close();
-                return true;
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                conexion.Close();
-                return false;
+                
+                conexion.Open();
+                SqliteCommand insertar = new("INSERT INTO pedidos (Obs,Id_cliente,Id_cadete,Estado) VALUES (@obs, @idcli, @idca, @est)", conexion);
+                insertar.Parameters.AddWithValue("@obs", Pedido.Obs);
+                insertar.Parameters.AddWithValue("@idcli", Pedido.id_cliente);
+                insertar.Parameters.AddWithValue("@idca", Pedido.id_cadete);
+                insertar.Parameters.AddWithValue("est",Pedido.estado);
+                try
+                {
+                    insertar.ExecuteReader();
+                    conexion.Close();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    conexion.Close();
+                    return false;
+                }
             }
 
         }
@@ -149,28 +160,32 @@ namespace LectorCSV
         }
 
         //base de datos
-        public bool EliminarCadete(int ID){
-            conexion.Open();
-            SqliteCommand select = new SqliteCommand("DELETE FROM Cadete WHERE id = @Id", conexion);
-            select.Parameters.AddWithValue("@id",Int32.Parse(ID));
-             try
+        public bool EliminarCadete(int id){
+              using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
-                select.ExecuteReader();
-                conexion.Close();
-                return true;
+                conexion.Open();
+                SqliteCommand select = new SqliteCommand("DELETE FROM Cadete WHERE id = @Id", conexion);
+                select.Parameters.AddWithValue("@id",id);
+                try
+                {
+                    select.ExecuteReader();
+                    conexion.Close();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    conexion.Close();
+                    return false;
+                }
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                conexion.Close();
-                return false;
-            }
-           
 
 
         } 
         //base de datos
         public bool EliminarPedido(string Nro){
+              using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+            {
                     conexion.Open();
                     SqliteCommand select = new SqliteCommand("DELETE FROM pedido WHERE Nro = @id", conexion);
                     select.Parameters.AddWithValue("@id",Int32.Parse(Nro));
@@ -187,7 +202,7 @@ namespace LectorCSV
                         return false;
                     }
                 
-
+            }
 
                 } 
         public void EliminarPedido(int id)
