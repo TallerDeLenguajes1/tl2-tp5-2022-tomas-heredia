@@ -6,7 +6,7 @@ using MyApp;
 
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Data;
+
 using Microsoft.Data.Sqlite;
 
 namespace LectorCSV
@@ -15,7 +15,7 @@ namespace LectorCSV
     public class HelperCsv
     {
         //para bace de datos
-        string CadenaDeConexion = "Data Source=datos.db;Cache=Shared"  ;
+        string CadenaDeConexion = "Data Source= datos/datos.db;Cache=Shared"  ;
         //usar este
 
         /* public void EscribirLinea( List<Alumno> ListadoElementos,string ruta)
