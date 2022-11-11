@@ -14,6 +14,8 @@ namespace LectorCSV
     
     public class HelperCsv
     {
+        //para bace de datos
+        string conexion = "Data Source=datos.db;Cache=Shared"  ;
         //usar este
 
         /* public void EscribirLinea( List<Alumno> ListadoElementos,string ruta)
@@ -146,7 +148,7 @@ namespace LectorCSV
         }
 
         //base de datos
-        public bool EliminarCadetes(int ID){
+        public bool EliminarCadete(int ID){
             conexion.Open();
             SqliteCommand select = new SqliteCommand("DELETE FROM Cadete WHERE id = @Id", conexion);
             select.Parameters.AddWithValue("@id",Int32.Parse(ID));
