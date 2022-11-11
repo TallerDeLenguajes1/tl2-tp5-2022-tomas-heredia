@@ -42,11 +42,12 @@ namespace TP6.Controllers
             MapperViewModel mapper = new MapperViewModel();
             Cadete cadete_ = mapper.GetCadete(nuevo);
 
-            HelperCsv archivo = new HelperCsv();
+            Helper archivo = new Helper();
+            
 
             archivo.cargarCadete(cadete_);
 
-            cadetes = archivo.LeerCsvCadete(@"Models\Cadetes.csv");
+            cadetes = archivo.ConsultaCadete();
 
             
             return View("ListarCadetes", cadetes);
@@ -55,7 +56,7 @@ namespace TP6.Controllers
 
         [HttpPost]
         public IActionResult bajaCadete(int id){
-            HelperCsv archivo = new HelperCsv();
+            Helper archivo = new Helper();
             archivo.EliminarCadete(id);
         
             return View();

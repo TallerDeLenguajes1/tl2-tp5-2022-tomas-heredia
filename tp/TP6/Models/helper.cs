@@ -12,30 +12,15 @@ using Microsoft.Data.Sqlite;
 namespace LectorCSV
 {
     
-    public class HelperCsv
+    public class Helper
     {
         //para bace de datos
         string connectionString = "Data Source= bases/datos.db;Cache=Shared"  ;
         //usar este
 
-        /* public void EscribirLinea( List<Alumno> ListadoElementos,string ruta)
-        {
-           
-                using TextWriter streamWriter = File.AppendText(ruta );
-                foreach (Alumno elemento in ListadoElementos)
-                    {
-                        Console.WriteLine(elemento);
-                        
-                        
-                        streamWriter.WriteLine(elemento.Apellido+", "+elemento.Nombre+", " +elemento.Dni+", " + elemento.Id );
-                       
-                        
-                    }
-                
-            
-            
-            
-        } */
+         public Helper(){
+        
+      }
 
         //bace de datos
          public bool SubirCadetes(Cadete Cadete){
@@ -44,7 +29,7 @@ namespace LectorCSV
             {
                 conexion.Open();
                 
-                SqliteCommand insertar = new("INSERT INTO cadetes (Nombre,Direccion,Telefono,Id) VALUES (@nom, @dire, @tel, @id_cad)", conexion);
+                SqliteCommand insertar = new("INSERT INTO Cadete (Nombre,Direccion,Telefono,Id) VALUES (@nom, @dire, @tel, @id_cad)", conexion);
                 insertar.Parameters.AddWithValue("@nom", Cadete.nombre);
                 insertar.Parameters.AddWithValue("@dire", Cadete.direccion);
                 insertar.Parameters.AddWithValue("@tel", Cadete.telefono);
@@ -93,24 +78,22 @@ namespace LectorCSV
             
             return LecturaDelArchivo;
         }
-        public List<Cadete> LeerCsvCadete( string nombreDeArchivo)
-        {
-            FileStream MiArchivo = new FileStream(nombreDeArchivo, FileMode.Open);
-            StreamReader StrReader = new StreamReader(MiArchivo);
-
-            string Linea = "";
-            List<Cadete> LecturaDelArchivo = new List<Cadete>();
-
-            while ((Linea = StrReader.ReadLine()) != null)
+      public List<Cadete>ConsultaCadete(){
+            List<Cadete> ListaCadetes = new List<Cadete>();
+        
+        using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
-                string[] Fila = Linea.Split(',');
-                Cadete nuevo= new Cadete(Convert.ToInt32(Fila[0]),Fila[1],Fila[2],Convert.ToInt32(Fila[3]));
-                LecturaDelArchivo.Add(nuevo);
+            conexion.Open();
+            SqliteCommand select = new SqliteCommand("SELECT * FROM Cadete", conexion);
+            var query = select.ExecuteReader();
+            while (query.Read())
+                {                                          //ID,          Nombre               Direc         Telefono           
+                    ListaCadetes.Add(new Cadete(query.GetInt32(0), query.GetString(1), query.GetString(3), query.GetInt32(2)));
+                }
+            conexion.Close();
             }
-            
-            StrReader.Close();
-            return LecturaDelArchivo;
-        }
+            return ListaCadetes;
+      } 
 
         //Base de datos
         public bool SubirPedido(Pedido Pedido){
@@ -119,11 +102,12 @@ namespace LectorCSV
             {
                 
                 conexion.Open();
-                SqliteCommand insertar = new("INSERT INTO pedidos (Obs,Id_cliente,Id_cadete,Estado) VALUES (@obs, @idcli, @idca, @est)", conexion);
+                SqliteCommand insertar = new("INSERT INTO Pedido (Obs,Id_cliente,Id_cadete,Estado,Nro) VALUES (@obs, @idcli, @idca, @est,@nro)", conexion);
                 insertar.Parameters.AddWithValue("@obs", Pedido.Obs);
                 insertar.Parameters.AddWithValue("@idcli", Pedido.id_cliente);
                 insertar.Parameters.AddWithValue("@idca", Pedido.id_cadete);
-                insertar.Parameters.AddWithValue("est",Pedido.estado);
+                insertar.Parameters.AddWithValue("@est",Pedido.estado);
+                insertar.Parameters.AddWithValue("@nro",Pedido.Nro);
                 try
                 {
                     insertar.ExecuteReader();
@@ -139,33 +123,31 @@ namespace LectorCSV
             }
 
         }
-         public List<Pedido> LeerCsvPedido( string nombreDeArchivo)
-        {
-            FileStream MiArchivo = new FileStream(nombreDeArchivo, FileMode.Open);
-            StreamReader StrReader = new StreamReader(MiArchivo);
-
-            string Linea = "";
-            List<Pedido> LecturaDelArchivo = new List<Pedido>();
-
-            while ((Linea = StrReader.ReadLine()) != null)
+         
+         public List<Pedido>ConsultaPedido(){
+            List<Pedido> ListaPedidos = new List<Pedido>();
+        
+        using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
-                string[] Fila = Linea.Split(',');
-                string[] cliente_aux = Fila[2].Split(',');
-                Pedido nuevo= new Pedido(Convert.ToInt32(Fila[0]),Fila[1],Convert.ToInt32(Fila[2]),Fila[3],Convert.ToInt32(Fila[4]));
-                LecturaDelArchivo.Add(nuevo);
+            conexion.Open();
+            SqliteCommand select = new SqliteCommand("SELECT * FROM Pedido", conexion);
+            var query = select.ExecuteReader();
+            while (query.Read())
+                {                                                    
+                    ListaPedidos.Add(new Pedido(query.GetInt32(0), query.GetString(1), query.GetInt32(2), query.GetString(3),query.GetInt32(4)));
+                }
+            conexion.Close();
             }
-            
-            StrReader.Close();
-            return LecturaDelArchivo;
-        }
+            return ListaPedidos;
+      } 
 
         //base de datos
         public bool EliminarCadete(int id){
               using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                 conexion.Open();
-                SqliteCommand select = new SqliteCommand("DELETE FROM Cadete WHERE id = @Id", conexion);
-                select.Parameters.AddWithValue("@id",id);
+                SqliteCommand select = new SqliteCommand("DELETE FROM Cadete WHERE Id = @Id", conexion);
+                select.Parameters.AddWithValue("@Id",id);
                 try
                 {
                     select.ExecuteReader();
@@ -183,12 +165,12 @@ namespace LectorCSV
 
         } 
         //base de datos
-        public bool EliminarPedido(string Nro){
+        public bool EliminarPedido(int Nro){
               using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                     conexion.Open();
                     SqliteCommand select = new SqliteCommand("DELETE FROM pedido WHERE Nro = @id", conexion);
-                    select.Parameters.AddWithValue("@id",Int32.Parse(Nro));
+                    select.Parameters.AddWithValue("@id",Nro);
                     try
                     {
                         select.ExecuteReader();
@@ -205,32 +187,32 @@ namespace LectorCSV
             }
 
                 } 
-        public void EliminarPedido(int id)
-        {
-            List<Pedido> pedidos = new List<Pedido>();
-            pedidos = this.LeerCsvPedido(@"Models\Pedidos.csv");
-            System.IO.File.WriteAllText(@"Models\Pedidos.csv","");
-            foreach (var item in pedidos)
-            {
-                if (id != item.Nro)
-                {
-                    this.cargarPedido(item);
-                }
-            }
-        }
+       
 
         public void cambiarCadete(int nro, int id_cadete){
-            List<Pedido> pedidos = new List<Pedido>();
-            pedidos = this.LeerCsvPedido(@"Models\Pedidos.csv");
-            System.IO.File.WriteAllText(@"Models\Pedidos.csv","");
-            foreach (var item in pedidos)
+
+            using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
-                if (nro != item.Nro)
-                {
-                    item.CanbiarCadete(id_cadete);
-                }
-                this.cargarPedido(item);
+                    conexion.Open();
+                    SqliteCommand select = new SqliteCommand("UPDATE Pedido SET Id_Cadete = @id_cadete WHERE Nro = @nro", conexion);
+                    
+                    try
+                    {
+                        select.ExecuteReader();
+                        conexion.Close();
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        conexion.Close();
+                        
+                    }
+                
             }
+
+
+           
 
         }
         /* public void archivoCSV (List<Alumno> ListadoElementos, string NombreArchivo){
