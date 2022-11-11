@@ -29,7 +29,7 @@ namespace TP6.Controllers
         [HttpPost]
         public IActionResult AltaPedido(int n, string ob, int c, string e, int i)
         {
-            HelperCsv archivo = new HelperCsv();
+            Helper archivo = new Helper();
             
             PedidoVIewModels model = new PedidoVIewModels(id,ob,c,e,i);
             id ++;
@@ -40,14 +40,14 @@ namespace TP6.Controllers
             
             archivo.cargarPedido(nuevo);
 
-            pedidos = archivo.LeerCsvPedido(@"Models\Pedidos.csv");
+            pedidos = archivo.ConsultaPedido();
 
             return View("ListarPedidos",pedidos);
         }
 
         [HttpPost]
         public IActionResult bajaPedido(int id){
-            HelperCsv archivo = new HelperCsv();
+            Helper archivo = new Helper();
             archivo.EliminarPedido(id);
         
             return View();
@@ -55,7 +55,7 @@ namespace TP6.Controllers
 
         [HttpPost]
         public IActionResult cambioCadete(int Nro, int id_cadete){
-            HelperCsv archivo = new HelperCsv();
+            Helper archivo = new Helper();
             archivo.cambiarCadete(Nro, id_cadete);
             return View();
         }
