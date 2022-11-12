@@ -59,5 +59,19 @@ namespace TP6.Controllers
             archivo.cambiarCadete(Nro, id_cadete);
             return View();
         }
+
+        public IActionResult pedidosPorCadete(){
+            Helper archivo = new Helper();
+            List<Pedido> pedidos = new List<Pedido>();
+            pedidos = archivo.PedidoPorCadete();
+            return View(pedidos);
+        }
+
+        public IActionResult pedidosPorCliente(){
+            Helper archivo = new Helper();
+            List<Pedido> pedidos = new List<Pedido>();
+            pedidos = archivo.PedidoPorCliente();
+            return View(pedidos);
+        }
     }
 }

@@ -58,8 +58,9 @@ namespace TP6.Controllers
         public IActionResult bajaCadete(int id){
             Helper archivo = new Helper();
             archivo.EliminarCadete(id);
-        
-            return View();
+            List<Cadete> cadetes = new List<Cadete>();
+            cadetes = archivo.ConsultaCadete();
+            return RedirectToAction("ListarCadetes");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

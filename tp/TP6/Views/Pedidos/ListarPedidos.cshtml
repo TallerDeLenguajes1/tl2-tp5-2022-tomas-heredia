@@ -19,10 +19,29 @@
     <h2>@item.</h2>   
     <h2>@item.estado</h2> 
     <h2>@item.Obs</h2> 
-    <form asp-controller="Cadete" asp-action= "cambioCadete" method="post">
+    <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
         <input type="number" value=@item.Nro hidden>
         <input type="number" value=@item.id_cadete hidden>
         <input type="submit" value="Modificar">
         
     </form>
+    <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
+        <input type="number" value=@item.Nro hidden>
+        <input type="number" value=@item.id_cadete hidden>
+        <input type="submit" value="Modificar">
+        
+    </form>
+
+    <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
+        <h2>Ordenar por Cadete</h2>
+        <input type="submit" value="Ver">
+        
+    </form>
+    <form asp-controller="Pedido" asp-action= "pedidosPorCLiente" method="post">
+        <h2>Ordenar por Cliente</h2>
+        <input type="submit" value="Ver">
+        
+    </form>
 }
+
+
