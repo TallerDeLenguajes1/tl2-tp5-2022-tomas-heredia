@@ -33,6 +33,7 @@ namespace TP6.Controllers
             return View();
         }
 
+        
 
         [HttpPost]
         public IActionResult addCadete(string n, string des, int t)
@@ -60,7 +61,7 @@ namespace TP6.Controllers
             archivo.EliminarCadete(id);
             List<Cadete> cadetes = new List<Cadete>();
             cadetes = archivo.ConsultaCadete();
-            return RedirectToAction("ListarCadetes");
+            return View("ListarCadetes", cadetes);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

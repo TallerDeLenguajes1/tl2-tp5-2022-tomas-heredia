@@ -27,7 +27,7 @@ namespace TP6.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AltaPedido(int n, string ob, int c, string e, int i)
+        public IActionResult addPedido(int n, string ob, int c, string e, int i)
         {
             Helper archivo = new Helper();
             
@@ -49,29 +49,32 @@ namespace TP6.Controllers
         public IActionResult bajaPedido(int id){
             Helper archivo = new Helper();
             archivo.EliminarPedido(id);
-        
-            return View();
+            List<Pedido> pedidos = new List<Pedido>();
+            pedidos = archivo.ConsultaPedido();
+            return View("ListarPedidos",pedidos);
         }
 
         [HttpPost]
         public IActionResult cambioCadete(int Nro, int id_cadete){
             Helper archivo = new Helper();
             archivo.cambiarCadete(Nro, id_cadete);
-            return View();
+            List<Pedido> pedidos = new List<Pedido>();
+            pedidos = archivo.ConsultaPedido();
+            return View("ListarPedidos",pedidos);
         }
 
         public IActionResult pedidosPorCadete(){
             Helper archivo = new Helper();
             List<Pedido> pedidos = new List<Pedido>();
             pedidos = archivo.PedidoPorCadete();
-            return View(pedidos);
+            return View("ListarPedidos",pedidos);
         }
 
         public IActionResult pedidosPorCliente(){
             Helper archivo = new Helper();
             List<Pedido> pedidos = new List<Pedido>();
             pedidos = archivo.PedidoPorCliente();
-            return View(pedidos);
+            return View("ListarPedidos",pedidos);
         }
     }
 }

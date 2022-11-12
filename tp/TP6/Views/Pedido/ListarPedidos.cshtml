@@ -2,8 +2,7 @@
 
 @foreach (var item in Model)
 {
-    <h2>@item.Nro</h2>
-    <h2>@item.</h2>   
+    <h2>@item.Nro</h2>  
     <h2>@item.estado</h2> 
     <h2>@item.Obs</h2> 
     <form asp-controller="Cadete" asp-action= "bajaPedido" method="post">
@@ -11,28 +10,8 @@
         <input type="submit" value="Eliminar">
         
     </form>
-}
 
-@foreach (var item in Model)
-{
-    <h2>@item.Nro</h2>
-    <h2>@item.</h2>   
-    <h2>@item.estado</h2> 
-    <h2>@item.Obs</h2> 
-    <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
-        <input type="number" value=@item.Nro hidden>
-        <input type="number" value=@item.id_cadete hidden>
-        <input type="submit" value="Modificar">
-        
-    </form>
-    <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
-        <input type="number" value=@item.Nro hidden>
-        <input type="number" value=@item.id_cadete hidden>
-        <input type="submit" value="Modificar">
-        
-    </form>
-
-    <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
+     <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
         <h2>Ordenar por Cadete</h2>
         <input type="submit" value="Ver">
         
@@ -42,6 +21,24 @@
         <input type="submit" value="Ver">
         
     </form>
+}
+
+@foreach (var item in Model)
+{
+    <h2>@item.Nro</h2>
+    
+    <h2>@item.estado</h2> 
+    <h2>@item.Obs</h2> 
+    <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
+        <div>Nuevo Cadete ID<input type="text" name="id"></div> 
+        <input type="number" value=@item.Nro hidden>
+        <input type="number" value=@item.id_cadete hidden>
+        <input type="submit" value="Modificar">
+        
+        
+    </form>
+
+   
 }
 
 
