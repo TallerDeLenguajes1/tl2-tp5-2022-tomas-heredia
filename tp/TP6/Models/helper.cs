@@ -203,7 +203,7 @@ namespace LectorCSV
                 return ListaPedidos;
         } 
 
-         public List<Pedido>PedidoPorCadete(){
+         public List<Pedido>PedidoPorCliente(){
             List<Pedido> ListaPedidos = new List<Pedido>();
         
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 

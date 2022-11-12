@@ -14,6 +14,9 @@ namespace MyApp
             
         }
         
+        public void addPedido(Pedido pedido){
+            pedidos.Add(pedido);
+        }
         
          public float JornalACobrar(){
             int total =0;
