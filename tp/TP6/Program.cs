@@ -1,7 +1,14 @@
+using Repo;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Para repositorio de cadetes (inyección de dependencia para el repositorio de cadetes)
+builder.Services.AddTransient<IRepoCadete, RepoCadete>();
+
+builder.Services.AddTransient<IRepoPedido, RepoPedido>();
 
 var app = builder.Build();
 

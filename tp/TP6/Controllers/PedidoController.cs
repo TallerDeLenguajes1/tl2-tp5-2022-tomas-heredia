@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ViewModels;
 using MyApp;
-using LectorCSV;
+using Repo;
 using Mappers;
 namespace TP6.Controllers
 {
@@ -17,10 +17,11 @@ namespace TP6.Controllers
         private int id = 1;
         private readonly ILogger<PedidoController> _logger;
         private  List<Pedido> pedidos = new List<Pedido>();
-
-        public PedidoController(ILogger<PedidoController> logger)
+        private readonly IRepoPedido _repPedidos;
+        public PedidoController(ILogger<PedidoController> logger,IRepoPedido repPedidos)
         {
             _logger = logger;
+            _repPedidos = repPedidos;
         }
         public IActionResult Index()
         {
@@ -29,7 +30,7 @@ namespace TP6.Controllers
         [HttpPost]
         public IActionResult addPedido(int n, string ob, int c, string e, int i)
         {
-            Helper archivo = new Helper();
+            
             
             PedidoVIewModels model = new PedidoVIewModels(id,ob,c,e,i);
             id ++;
@@ -38,42 +39,42 @@ namespace TP6.Controllers
             Pedido nuevo = mapper.GetPedido(model);
 
             
-            archivo.cargarPedido(nuevo);
+            _repPedidos.cargarPedido(nuevo);
 
-            pedidos = archivo.ConsultaPedido();
+            pedidos = _repPedidos.ConsultaPedido();
 
             return View("ListarPedidos",pedidos);
         }
 
         [HttpPost]
         public IActionResult bajaPedido(int id){
-            Helper archivo = new Helper();
-            archivo.EliminarPedido(id);
+           
+            _repPedidos.EliminarPedido(id);
             List<Pedido> pedidos = new List<Pedido>();
-            pedidos = archivo.ConsultaPedido();
+            pedidos = _repPedidos.ConsultaPedido();
             return View("ListarPedidos",pedidos);
         }
 
         [HttpPost]
         public IActionResult cambioCadete(int Nro, int id_cadete){
-            Helper archivo = new Helper();
-            archivo.cambiarCadete(Nro, id_cadete);
+            
+            _repPedidos.cambiarCadete(Nro, id_cadete);
             List<Pedido> pedidos = new List<Pedido>();
-            pedidos = archivo.ConsultaPedido();
+            pedidos = _repPedidos.ConsultaPedido();
             return View("ListarPedidos",pedidos);
         }
 
         public IActionResult pedidosPorCadete(){
-            Helper archivo = new Helper();
+            
             List<Pedido> pedidos = new List<Pedido>();
-            pedidos = archivo.PedidoPorCadete();
+            pedidos = _repPedidos.PedidoPorCadete();
             return View("ListarPedidos",pedidos);
         }
 
         public IActionResult pedidosPorCliente(){
-            Helper archivo = new Helper();
+            
             List<Pedido> pedidos = new List<Pedido>();
-            pedidos = archivo.PedidoPorCliente();
+            pedidos = _repPedidos.PedidoPorCliente();
             return View("ListarPedidos",pedidos);
         }
     }

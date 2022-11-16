@@ -10,6 +10,7 @@ using MyApp;
 using LectorCSV;
 using ViewModels;
 using Mappers;
+using Repo;
 
 namespace TP6.Controllers
 {
@@ -18,11 +19,12 @@ namespace TP6.Controllers
         private int id = 1;
         static List<Cadete> cadetes = new List<Cadete>();
         private readonly ILogger<CadeteController> _logger;
-
-        public CadeteController(ILogger<CadeteController> logger)
+        private readonly IRepoCadete _repCadetes;
+        public CadeteController(ILogger<CadeteController> logger,IRepoCadete repCadetes)
         {
             _logger = logger;
-            // this.cadetes = cadetes;
+            _repCadetes = repCadetes;
+            
         }
 
         
@@ -43,12 +45,12 @@ namespace TP6.Controllers
             MapperViewModel mapper = new MapperViewModel();
             Cadete cadete_ = mapper.GetCadete(nuevo);
 
-            Helper archivo = new Helper();
+           
             
 
-            archivo.cargarCadete(cadete_);
+            _repCadetes.cargarCadete(cadete_);
 
-            cadetes = archivo.ConsultaCadete();
+            cadetes = _repCadetes.ConsultaCadete();
 
             
             return View("ListarCadetes", cadetes);
@@ -57,10 +59,10 @@ namespace TP6.Controllers
 
         [HttpPost]
         public IActionResult bajaCadete(int id){
-            Helper archivo = new Helper();
-            archivo.EliminarCadete(id);
+            
+            _repCadetes.EliminarCadete(id);
             List<Cadete> cadetes = new List<Cadete>();
-            cadetes = archivo.ConsultaCadete();
+            cadetes = _repCadetes.ConsultaCadete();
             return View("ListarCadetes", cadetes);
         }
 
