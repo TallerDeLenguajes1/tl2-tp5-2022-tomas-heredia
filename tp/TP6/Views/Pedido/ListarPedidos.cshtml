@@ -5,7 +5,9 @@
     <h2>@item.Nro</h2>  
     <h2>@item.Obs</h2> 
     <h2>@item.estado</h2> 
-    <form asp-controller="Cadete" asp-action= "bajaPedido" method="post">
+    <h2>@item.id_cadete</h2>
+    <h2>@item.id_cliente</h2>  
+    <form asp-controller="Pedido" asp-action= "bajaPedido" method="post">
         <input type="number" value=@item.Nro name="id" hidden>
         <input type="submit" value="Eliminar">
         
