@@ -1,4 +1,4 @@
-
+@model ViewModels.CadeteViewModel
 
 @{
     ViewData["Title"] = "Cadete Page";
@@ -9,9 +9,24 @@
 
         <legend>"Registrar Cadete"</legend>
         
-        <div>"Nombre" <input type="text" name="n" required></div>
-        <div>"Direccion"<input type="text" name= "des" required></div>
-        <div>"Telefono"<input type="number" name="t" required></div>
-        <div><input type="submit" value="Cargar" name="car"><input type="reset" value="Borrar" name="res"></div>
+        <div class="form-group">
+            <label asp-for="nombre" class="control-label"></label>
+            <input asp-for="nombre" class="form-control">
+            <span asp-validation-for="nombre" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="direccion" class="control-label"></label>
+            <input asp-for="direccion" class="form-control">
+            <span asp-validation-for="direccion" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="telefono" class="control-label"></label>
+            <input asp-for="telefono" class="form-control">
+            <span asp-validation-for="telefono" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Guardar" class="btn btn-info" />
+        </div>
+        @* <input asp-for="Id" value="0" type="hidden"/> *@
     </form>
 </div>

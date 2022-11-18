@@ -38,19 +38,15 @@ namespace TP6.Controllers
         
 
         [HttpPost]
-        public IActionResult addCadete(string n, string des, int t)
+        public IActionResult addCadete(CadeteViewModel nuevo)
         {
-            CadeteViewModel nuevo = new CadeteViewModel(id,n,des,t);
-            id ++;
+            
             MapperViewModel mapper = new MapperViewModel();
             Cadete cadete_ = mapper.GetCadete(nuevo);
 
-           
-            
-
             _repCadetes.cargarCadete(cadete_);
 
-            cadetes = _repCadetes.ConsultaCadete();
+            cadetes = _repCadetes.GetCadetes();
 
             
             return View("ListarCadetes", cadetes);
@@ -62,7 +58,7 @@ namespace TP6.Controllers
             
             _repCadetes.EliminarCadete(id);
             List<Cadete> cadetes = new List<Cadete>();
-            cadetes = _repCadetes.ConsultaCadete();
+            cadetes = _repCadetes.GetCadetes();
             return View("ListarCadetes", cadetes);
         }
 

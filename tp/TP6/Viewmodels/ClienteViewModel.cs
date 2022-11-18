@@ -1,8 +1,7 @@
 using MyApp;
 using System.ComponentModel.DataAnnotations;
-namespace ViewModels
-{
-    public class CadeteViewModel{
+namespace ViewModels{
+     public class ClienteViewModel{
         [Required]
         public int id ;
   
@@ -12,21 +11,17 @@ namespace ViewModels
         public string direccion{get;set;}
         [Phone]
         public int telefono{get;set;}
-
-        public CadeteViewModel(int id, string nombre, string direccion, int telefono){
+        [StringLength(1000)] 
+        public string datos_Direccion{get;set;}
+        public ClienteViewModel(int id, string nombre, string direccion, int telefono, string datos){
             this.id = id;
             this.nombre = nombre;
             this.direccion =direccion;
             this.telefono = telefono;
-        }
-        public CadeteViewModel( string nombre, string direccion, int telefono){
-            this.id = 0;
-            this.nombre = nombre;
-            this.direccion =direccion;
-            this.telefono = telefono;
+            this.datos_Direccion = datos;
         }
         public void set_id(int id){
             this.id = id;
         }
-    }
+     }
 }

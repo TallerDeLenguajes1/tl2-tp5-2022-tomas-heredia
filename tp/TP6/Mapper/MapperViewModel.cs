@@ -40,5 +40,16 @@ namespace Mappers
             PedidoVIewModels nuevo = new PedidoVIewModels(pedido.Nro,pedido.Obs, pedido.id_cliente, pedido.estado,pedido.id_cadete);
             return nuevo;
         }
+
+        public Cliente GetCliente(ClienteViewModel cl){
+            Cliente nuevo = new Cliente(cl.id,cl.nombre,cl.direccion,cl.telefono,cl.datos_Direccion);
+            nuevo.set_id(cl.id);
+            return nuevo;
+        }
+
+        public ClienteViewModel GetClienteViewModel(Cliente cl){
+            ClienteViewModel nuevo = new ClienteViewModel(cl.id,cl.nombre,cl.direccion,cl.telefono,cl.DatosReferenciaDireccion);
+            return nuevo;
+        }
     }
 }

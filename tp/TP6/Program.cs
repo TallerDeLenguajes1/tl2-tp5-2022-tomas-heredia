@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 
 // Para repositorio de cadetes (inyección de dependencia para el repositorio de cadetes)
 builder.Services.AddTransient<IRepoCadete, RepoCadete>();
-
+builder.Services.AddTransient<IRepoCliente, RepoCliente>();
 builder.Services.AddTransient<IRepoPedido, RepoPedido>();
 
 var app = builder.Build();

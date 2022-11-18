@@ -1,11 +1,10 @@
-@model List<MyApp.Cadete> 
+@model List<MyApp.Cliente> 
 
 @foreach (var item in Model)
 {
-    <h2>@item.nombre</h2>
+    <h2>@item.nombre</h2> 
     <h2>@item.id</h2>
-    <h2>@item.JornalACobrar()</h2>   
-    <form asp-controller="Cadete" asp-action= "bajaCadete" method="post">
+    <form asp-controller="Cliente" asp-action= "bajaCliente" method="post">
         <input type="number" value=@item.id name="id" hidden>
         <input type="submit" value="Eliminar">
         

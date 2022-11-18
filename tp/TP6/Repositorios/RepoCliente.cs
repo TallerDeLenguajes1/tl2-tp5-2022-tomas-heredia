@@ -11,22 +11,23 @@ using Microsoft.Data.Sqlite;
 
 namespace Repo
 {
-    public class RepoCadete:IRepoCadete {
+    public class RepoCliente:IRepoCliente {
         
         //conexion con db
         string connectionString = "Data Source= bases/datos.db;Cache=Shared"  ;
-        public RepoCadete(){
+        public RepoCliente(){
         
         }
 
-        public bool cargarCadete(Cadete Cadete){
+        public bool cargarCliente(Cliente Cliente){
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                 conexion.Open();
-                SqliteCommand insertar = new("INSERT INTO Cadete (Nombre,Direccion,Telefono) VALUES (@nom, @dire, @tel)", conexion);
-                insertar.Parameters.AddWithValue("@nom", Cadete.nombre);
-                insertar.Parameters.AddWithValue("@dire", Cadete.direccion);
-                insertar.Parameters.AddWithValue("@tel", Cadete.telefono);
+                SqliteCommand insertar = new("INSERT INTO Cliente (Nombre,Direccion,Telefono,Datos_Direccion) VALUES (@nom, @dire, @tel,@dat)", conexion);
+                insertar.Parameters.AddWithValue("@nom", Cliente.nombre);
+                insertar.Parameters.AddWithValue("@dire", Cliente.direccion);
+                insertar.Parameters.AddWithValue("@tel", Cliente.telefono);
+                insertar.Parameters.AddWithValue("@dat", Cliente.DatosReferenciaDireccion);
                 try
                 {
                     insertar.ExecuteReader();
@@ -42,33 +43,39 @@ namespace Repo
             }
 
         }
-        public List<Cadete>GetCadetes(){
-            List<Cadete> ListaCadetes = new List<Cadete>();
+        public List<Cliente>ConsultaCliente(){
+            List<Cliente> ListaClientes = new List<Cliente>();
         
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
                 {
                 conexion.Open();
-                SqliteCommand select = new SqliteCommand("SELECT * FROM Cadete", conexion);
+                SqliteCommand select = new SqliteCommand("SELECT * FROM Cliente", conexion);
                 var query = select.ExecuteReader();
                 while (query.Read())
-                    {               
-                        var Telefono = 0;
-                    if (query["Telefono"] != System.DBNull.Value)
-                    {
-                        Telefono=Convert.ToInt32( query["Telefono"]);
-                    }
-                                                   //ID,          Nombre               Direc         Telefono           
-                        ListaCadetes.Add(new Cadete(query.GetInt32(0), query.GetString(1), query.GetString(3), Telefono));
+                    {   
+                var descripcion = "";
+                if (query["Descripcion_Direccion"] != System.DBNull.Value)
+                {
+                    descripcion= query["Descripcion_Direccion"].ToString();
+                }
+                var Telefono = 0;
+                if (query["Telefono"] != System.DBNull.Value)
+                {
+                    Telefono=Convert.ToInt32( query["Telefono"]);
+                }
+
+                                                              //ID,          Nombre               Direc         Telefono           descripcion
+                    ListaClientes.Add(new Cliente(query.GetInt32(0), query.GetString(1), query.GetString(3), Telefono, descripcion));
                     }
                 conexion.Close();
                 }
-            return ListaCadetes;
+            return ListaClientes;
       } 
-      public bool EliminarCadete(int id){
+      public bool EliminarCliente(int id){
               using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                 conexion.Open();
-                SqliteCommand select = new SqliteCommand("DELETE FROM Cadete WHERE Id = @Id", conexion);
+                SqliteCommand select = new SqliteCommand("DELETE FROM Cliente WHERE Id = @Id", conexion);
                 select.Parameters.AddWithValue("@Id",id);
                 try
                 {

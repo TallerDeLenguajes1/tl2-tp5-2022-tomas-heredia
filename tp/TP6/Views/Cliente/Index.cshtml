@@ -2,3 +2,17 @@
 @{
     ViewData["Title"] = "Cliente Page";
 }
+
+
+<div >
+    <form asp-controller="Cliente" asp-action= "addCLiente" method="post">
+
+        <legend>"Registrar Cadete"</legend>
+        
+        <div>"Nombre" <input type="text" name="n" required></div>
+        <div>"Direccion"<input type="text" name= "des" required></div>
+        <div>"Telefono"<input type="number" name="t" ></div>
+        <div>"Datos Direccion"<input type="text" name= "d" ></div>
+        <div><input type="submit" value="Cargar" name="car"><input type="reset" value="Borrar" name="res"></div>
+    </form>
+</div>
