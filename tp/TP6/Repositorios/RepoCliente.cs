@@ -23,7 +23,7 @@ namespace Repo
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                 conexion.Open();
-                SqliteCommand insertar = new("INSERT INTO Cliente (Nombre,Direccion,Telefono,Datos_Direccion) VALUES (@nom, @dire, @tel,@dat)", conexion);
+                SqliteCommand insertar = new("INSERT INTO Cliente (Nombre,Direccion,Telefono,Descripcion_Direccion) VALUES (@nom, @dire, @tel,@dat)", conexion);
                 insertar.Parameters.AddWithValue("@nom", Cliente.nombre);
                 insertar.Parameters.AddWithValue("@dire", Cliente.direccion);
                 insertar.Parameters.AddWithValue("@tel", Cliente.telefono);

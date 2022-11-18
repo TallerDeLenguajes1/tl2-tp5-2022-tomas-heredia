@@ -1,47 +1,65 @@
 @model List<MyApp.Pedido> 
 
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nro</th>
+      <th scope="col">Obserbacion</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Id Cadete</th>
+      <th scope="col">Id Cliente</th>
+      <th scope="col">Borrar</th>
+      <th scope="col">Por Cliente</th>
+      <th scope="col">Por Cadete</th>
+    </tr>
+  </thead>
 @foreach (var item in Model)
 {
-    <h2>@item.Nro</h2>  
-    <h2>@item.Obs</h2> 
-    <h2>@item.estado</h2> 
-    <h2>@item.id_cadete</h2>
-    <h2>@item.id_cliente</h2>  
-    <form asp-controller="Pedido" asp-action= "bajaPedido" method="post">
+  <tbody>
+    <tr>
+      
+      <td>@item.Nro</td>
+      <td>@item.Obs</td>
+      <td>@item.estado</td>
+      <td>@item.id_cadete</td>
+      <td>@item.id_cliente</td>
+      <td>
+        <form asp-controller="Pedido" asp-action= "bajaPedido" method="post">
         <input type="number" value=@item.Nro name="id" hidden>
-        <input type="submit" value="Eliminar">
+        <input class="btn btn-danger" type="submit" value="Eliminar"></form>
+      </td>
+      <td>
+        <form asp-controller="Pedido" asp-action= "pedidosPorCLiente" method="post">
         
- </form>
-
-   
-}
-
-  <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
-        <h2>Ordenar por Cadete</h2>
-        <input type="submit" value="Ver">
+        <input class="btn btn-success" type="submit" value="Ver"> 
+    </form>
+      </td>
+      <td>
+        <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
+        
+        <input class="btn btn-success" type="submit" value="Ver">
+    </form>
+      </td>
+      <td>
+        <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
+        <div><input type="text" name="id"></div> 
+        <input type="number" value=@item.Nro name="Nro" hidden>
+        
+        <input class="btn btn-primary" type="submit" value="Modificar">
+        
         
     </form>
-    <form asp-controller="Pedido" asp-action= "pedidosPorCLiente" method="post">
-        <h2>Ordenar por Cliente</h2>
-        <input type="submit" value="Ver">
-        
-    </form>   
-@foreach (var item in Model)
-{
-    <h2>@item.Nro</h2>
+      </td>
+    </tr>
+   
+  </tbody>
     
-    <h2>@item.Obs</h2> 
-    <h2>@item.estado</h2> 
-    <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
-        <div>Nuevo Cadete ID<input type="text" name="id"></div> 
-        <input type="number" value=@item.Nro hidden>
-        <input type="number" value=@item.id_cadete hidden>
-        <input type="submit" value="Modificar">
-        
-        
-    </form>
-
-   
 }
+</table>
+
+
+       
+
 
 

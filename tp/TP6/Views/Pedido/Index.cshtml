@@ -1,20 +1,39 @@
+@model ViewModels.PedidoVIewModels
+
 @{
-    ViewData["Title"] = "Pedidos Page";
-   
-    
+    ViewData["Title"] = "Pedido Page";
 }
 
-
- 
 <div >
     <form asp-controller="Pedido" asp-action= "addPedido" method="post">
 
         <legend>"Registrar Pedido"</legend>
         
-        <div>"Observacion" <input type="text" name="ob" required></div>
-        <div>"Cliente ID"<input type="number" name= "c" required></div>
-        <div>"estado"<input type="text" name="e" required></div>
-        <div>"cadete ID:"<input type="number" name="i" required></div>
-        <div><input type="submit" value="Cargar" name="car"><input type="reset" value="Borrar" name="res"></div>
+        <div class="form-group">
+            <label asp-for="Obs" class="control-label"></label>
+            <input asp-for="Obs" class="form-control">
+            <span asp-validation-for="Obs" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="estado" class="control-label"></label>
+            <input asp-for="estado" class="form-control">
+            <span asp-validation-for="estado" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="id_cliente" class="control-label"></label>
+            <input asp-for="id_cliente" class="form-control">
+            <span asp-validation-for="id_cliente" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="id_cadete" class="control-label"></label>
+            <input asp-for="id_cadete" class="form-control">
+            <span asp-validation-for="id_cadete" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />
+        </div>
+        @* <input asp-for="Id" value="0" type="hidden"/> *@
     </form>
 </div>
+        
+        

@@ -1,18 +1,38 @@
 
+@model ViewModels.ClienteViewModel
+
 @{
-    ViewData["Title"] = "Cliente Page";
+    ViewData["Title"] = "CLiente Page";
 }
 
-
 <div >
-    <form asp-controller="Cliente" asp-action= "addCLiente" method="post">
+    <form asp-controller="CLiente" asp-action= "addCLiente" method="post">
 
-        <legend>"Registrar Cadete"</legend>
+        <legend>"Registrar CLiente"</legend>
         
-        <div>"Nombre" <input type="text" name="n" required></div>
-        <div>"Direccion"<input type="text" name= "des" required></div>
-        <div>"Telefono"<input type="number" name="t" ></div>
-        <div>"Datos Direccion"<input type="text" name= "d" ></div>
-        <div><input type="submit" value="Cargar" name="car"><input type="reset" value="Borrar" name="res"></div>
+        <div class="form-group">
+            <label asp-for="nombre" class="control-label"></label>
+            <input asp-for="nombre" class="form-control">
+            <span asp-validation-for="nombre" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="direccion" class="control-label"></label>
+            <input asp-for="direccion" class="form-control">
+            <span asp-validation-for="direccion" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="telefono" class="control-label"></label>
+            <input asp-for="telefono" class="form-control">
+            <span asp-validation-for="telefono" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="descripcion_Direccion" class="control-label"></label>
+            <input asp-for="descripcion_Direccion" class="form-control">
+            <span asp-validation-for="descripcion_Direccion" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />
+        </div>
+        @* <input asp-for="Id" value="0" type="hidden"/> *@
     </form>
 </div>

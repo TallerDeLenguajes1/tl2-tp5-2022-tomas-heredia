@@ -28,12 +28,9 @@ namespace TP6.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult addPedido(int n, string ob, int c, string e, int i)
+        public IActionResult addPedido(PedidoVIewModels model)
         {
-            
-            
-            PedidoVIewModels model = new PedidoVIewModels(id,ob,c,e,i);
-            id ++;
+
 
             MapperViewModel mapper = new MapperViewModel();
             Pedido nuevo = mapper.GetPedido(model);
@@ -56,9 +53,9 @@ namespace TP6.Controllers
         }
 
         [HttpPost]
-        public IActionResult cambioCadete(int Nro, int id_cadete){
+        public IActionResult cambioCadete(int id,int Nro){
             
-            _repPedidos.cambiarCadete(Nro, id_cadete);
+            _repPedidos.cambiarCadete(id,Nro);
             List<Pedido> pedidos = new List<Pedido>();
             pedidos = _repPedidos.ConsultaPedido();
             return View("ListarPedidos",pedidos);

@@ -13,6 +13,9 @@ namespace ViewModels
         [Phone]
         public int telefono{get;set;}
 
+        public CadeteViewModel(){
+            
+        }
         public CadeteViewModel(int id, string nombre, string direccion, int telefono){
             this.id = id;
             this.nombre = nombre;

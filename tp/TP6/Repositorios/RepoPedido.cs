@@ -88,16 +88,17 @@ namespace Repo
 
         }
 
-        public void cambiarCadete(int nro, int id_cadete){
+        public void cambiarCadete(int id_nueva,int nro){
 
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                     conexion.Open();
-                    SqliteCommand select = new SqliteCommand("UPDATE Pedido SET Id_Cadete = @id_cadete WHERE Nro = @nro", conexion);
-                    
+                    SqliteCommand select = new SqliteCommand("UPDATE Pedido SET Id_cadete = @id_nueva WHERE Nro = @nro", conexion);
+                    select.Parameters.AddWithValue("@nro",nro);
+                    select.Parameters.AddWithValue("@id_nueva",id_nueva);
                     try
                     {
-                        select.ExecuteReader();
+                        select.ExecuteNonQuery();
                         conexion.Close();
                         
                     }

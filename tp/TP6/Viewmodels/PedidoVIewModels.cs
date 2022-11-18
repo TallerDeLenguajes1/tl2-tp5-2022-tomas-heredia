@@ -19,5 +19,8 @@ namespace ViewModels{
             estado = e;
             this.id_cadete = id_cadete;
         }
+         public PedidoVIewModels(){
+            
+        }
     }
 }

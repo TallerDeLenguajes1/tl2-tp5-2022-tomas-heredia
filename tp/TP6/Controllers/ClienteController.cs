@@ -34,10 +34,9 @@ namespace TP6.Controllers
         }
         
         [HttpPost]
-        public IActionResult addCliente(string n, string des, int t, string d)
+        public IActionResult addCliente(ClienteViewModel nuevo)
         {
-            ClienteViewModel nuevo = new ClienteViewModel(id,n,des,t,d);
-            id ++;
+            
             MapperViewModel mapper = new MapperViewModel();
             Cliente Cliente_ = mapper.GetCliente(nuevo);
 

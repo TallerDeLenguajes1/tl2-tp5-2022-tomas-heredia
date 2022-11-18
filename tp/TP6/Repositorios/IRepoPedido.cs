@@ -12,7 +12,7 @@ public interface IRepoPedido
     bool EliminarPedido(int Nro);
     List<Pedido>ConsultaPedido();
 
-    void cambiarCadete(int nro, int id_cadete);
+    void cambiarCadete(int id_nueva,int nro);
 
     List<Pedido>PedidoPorCadete();
 

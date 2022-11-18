@@ -42,7 +42,7 @@ namespace Mappers
         }
 
         public Cliente GetCliente(ClienteViewModel cl){
-            Cliente nuevo = new Cliente(cl.id,cl.nombre,cl.direccion,cl.telefono,cl.datos_Direccion);
+            Cliente nuevo = new Cliente(cl.id,cl.nombre,cl.direccion,cl.telefono,cl.descripcion_Direccion);
             nuevo.set_id(cl.id);
             return nuevo;
         }
