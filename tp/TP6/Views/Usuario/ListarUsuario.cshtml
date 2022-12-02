@@ -1,13 +1,13 @@
-@model List<ViewModels.ClienteViewModel> 
+@model List<ViewModels.UsuarioViewModel> 
 
 <table class="table">
   <thead>
     <tr>
       <th scope="col">id</th>
       <th scope="col">Nombre</th>
-      <th scope="col">Direccion</th>
-      <th scope="col">Telefono</th>
-      <th scope="col">Descripcion Direccion</th>
+      <th scope="col">Usuario</th>
+      <th scope="col">Rol</th>
+      
       <th scope="col">Borrar</th>
     </tr>
   </thead>
@@ -17,11 +17,11 @@
     <tr>
       <th scope="row">@item.id</th>
       <td>@item.nombre</td>
-      <td>@item.direccion</td>
-      <td>@item.telefono</td>
-      <td>@item.descripcion_Direccion</td>
+      <td>@item.usuario</td>
+      
+      <td>@item.rol</td>
       <td>
-        <form asp-controller="Cliente" asp-action= "bajaCliente" method="post">
+        <form asp-controller="Cliente" asp-action= "bajaUsuario" method="post">
             <input type="number" value=@item.id name="id" hidden>
             <input  class="btn btn-danger" type="submit" value="Eliminar">
             

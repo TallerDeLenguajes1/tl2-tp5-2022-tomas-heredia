@@ -1,0 +1,69 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using TP6.Models;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using MyApp;
+using LectorCSV;
+using ViewModels;
+using Mappers;
+using Repo;
+using AutoMapper;
+
+namespace TP6.Controllers
+{
+    public class UsuarioController : Controller
+    {
+        private int id = 1;
+        private readonly ILogger<UsuarioController> _logger;
+        private  List<Usuario> Clientes;
+        private readonly IMapper _mapper;
+        private readonly IRepoUsuario _repUsuario;
+        public UsuarioController(ILogger<UsuarioController> logger,IRepoUsuario repUsuario, IMapper mapper)
+        {
+            _logger = logger;
+            _repUsuario = repUsuario;
+            _mapper = mapper;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult ControlUsuario(UsuarioViewModel nuevo)
+        {
+            
+            
+            Usuario Usuario_ = _mapper.Map<Usuario>(nuevo);
+
+            _repUsuario.cargarUsuario(Usuario_);
+
+            Clientes = _repUsuario.ConsultaUsuario();
+
+            
+            return View("ListarUsuario", _mapper.Map<List<UsuarioViewModel>>(Clientes));
+
+        }
+
+        [HttpPost]
+        public IActionResult bajaUsuario(int id){
+       
+            _repUsuario.EliminarUsuario(id);
+            List<Usuario> Clientes = new List<Usuario>();
+            Clientes = _repUsuario.ConsultaUsuario();
+            return View("ListarUsuario", _mapper.Map<List<UsuarioViewModel>>(Clientes));
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+    }
+}

@@ -1,0 +1,29 @@
+@model ViewModels.UsuarioViewModel
+
+@{
+    ViewData["Title"] = "Usuario Page";
+}
+
+<div >
+    <form asp-controller="Usuario" asp-action= "ControlUsuario" method="post">
+
+        <legend>"Registrar Usuario"</legend>
+        
+
+        <div class="form-group">
+            <label asp-for="usuario" class="control-label"></label>
+            <input asp-for="usuario" class="form-control">
+            <span asp-validation-for="usuario" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="contrasenia" type="password" class="control-label"></label>
+            <input asp-for="contrasenia" class="form-control">
+            <span asp-validation-for="contrasenia" class="text-dapasnger"></span>
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />
+        </div>
+        @* <input asp-for="Id" value="0" type="hidden"/> *@
+    </form>
+</div>

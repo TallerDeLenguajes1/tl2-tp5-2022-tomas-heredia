@@ -11,21 +11,22 @@ using LectorCSV;
 using ViewModels;
 using Mappers;
 using Repo;
-
-using MyApp;
+using AutoMapper;
 
 namespace TP6.Controllers
 {
-    public class ClienteController : Controller
+    public class ClienteControler : Controller
     {
         private int id = 1;
-        private readonly ILogger<ClienteController> _logger;
+        private readonly ILogger<ClienteControler> _logger;
         private  List<Cliente> Clientes;
+        private readonly IMapper _mapper;
         private readonly IRepoCliente _repClientes;
-        public ClienteController(ILogger<ClienteController> logger,IRepoCliente repClientes)
+        public ClienteControler(ILogger<ClienteControler> logger,IRepoCliente repClientes, IMapper mapper)
         {
             _logger = logger;
             _repClientes = repClientes;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -37,25 +38,25 @@ namespace TP6.Controllers
         public IActionResult addCliente(ClienteViewModel nuevo)
         {
             
-            MapperViewModel mapper = new MapperViewModel();
-            Cliente Cliente_ = mapper.GetCliente(nuevo);
+            
+            Cliente Cliente_ = _mapper.Map<Cliente>(nuevo);
 
             _repClientes.cargarCliente(Cliente_);
 
             Clientes = _repClientes.ConsultaCliente();
 
             
-            return View("ListarClientes", Clientes);
+            return View("ListarClientes", _mapper.Map<List<ClienteViewModel>>(Clientes));
 
         }
 
         [HttpPost]
         public IActionResult bajaCliente(int id){
-            
+       
             _repClientes.EliminarCliente(id);
             List<Cliente> Clientes = new List<Cliente>();
             Clientes = _repClientes.ConsultaCliente();
-            return View("ListarClientes", Clientes);
+            return View("ListarClientes", _mapper.Map<List<ClienteViewModel>>(Clientes));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
