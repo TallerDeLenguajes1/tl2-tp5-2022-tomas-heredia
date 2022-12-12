@@ -20,12 +20,6 @@ namespace ViewModels
         [Required]
         public string rol {get;set;}
 
-        public  U_ListViewModel (int id, string nombre ,string usuario,string contrasenia,string rol){
-            this.id = id;
-            this.nombre = nombre;
-            this.usuario = usuario;
-            this.contrasenia = contrasenia;
-            this.rol = rol;
-        } 
+
     }
 }

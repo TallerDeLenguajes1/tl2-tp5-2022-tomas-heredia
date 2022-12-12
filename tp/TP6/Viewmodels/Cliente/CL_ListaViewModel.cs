@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ViewModels{
      public class CL_ListaViewModel{
         [Required]
-        public int id ;
+        public int id {get;set;}
   
         [Required] [StringLength(1000)] 
         public string nombre{get;set;}
@@ -13,18 +13,6 @@ namespace ViewModels{
         public int telefono{get;set;}
         [StringLength(1000)] 
         public string descripcion_Direccion{get;set;}
-        public CL_ListaViewModel(){
-            
-        }
-        public CL_ListaViewModel(int id, string nombre, string direccion, int telefono, string datos){
-            this.id = id;
-            this.nombre = nombre;
-            this.direccion =direccion;
-            this.telefono = telefono;
-            this.descripcion_Direccion = datos;
-        }
-        public void set_id(int id){
-            this.id = id;
-        }
+        
      }
 }

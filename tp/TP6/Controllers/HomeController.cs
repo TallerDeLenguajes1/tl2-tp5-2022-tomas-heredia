@@ -23,9 +23,20 @@ public class HomeController : Controller
        
             
            
-            return RedirectToAction("Index","Cadete");
-        }
-
+        return RedirectToAction("Index","Cadete");
+    }
+    public IActionResult IndexCliente(){
+       
+            
+           
+        return RedirectToAction("Index","Cliente");
+    }
+    public IActionResult IndexPedido(){
+       
+            
+           
+        return RedirectToAction("Index","Pedido");
+    }
     public IActionResult Privacy()
     {
         return View();

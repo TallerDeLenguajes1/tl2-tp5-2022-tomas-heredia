@@ -1,4 +1,4 @@
-@model List<MyApp.Pedido> 
+@model List<ViewModels.P_ListaViewModel> 
 
 
 <table class="table">
@@ -10,8 +10,8 @@
       <th scope="col">Id Cadete</th>
       <th scope="col">Id Cliente</th>
       <th scope="col">Borrar</th>
-      <th scope="col">Por Cliente</th>
-      <th scope="col">Por Cadete</th>
+      <th scope="col">Modificar Id Cadete</th>
+      <th scope="col">Modificar Pedido</th>
     </tr>
   </thead>
 @foreach (var item in Model)
@@ -29,21 +29,20 @@
         <input type="number" value=@item.Nro name="id" hidden>
         <input class="btn btn-danger" type="submit" value="Eliminar"></form>
       </td>
-      <td>
-        <form asp-controller="Pedido" asp-action= "pedidosPorCLiente" method="post">
-        
-        <input class="btn btn-success" type="submit" value="Ver"> 
-    </form>
-      </td>
-      <td>
-        <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
-        
-        <input class="btn btn-success" type="submit" value="Ver">
-    </form>
-      </td>
+      
       <td>
         <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
         <div><input type="text" name="id"></div> 
+        <input type="number" value=@item.Nro name="Nro" hidden>
+        
+        <input class="btn btn-primary" type="submit" value="Modificar">
+        
+        
+    </form>
+      </td>
+      <td>
+        <form asp-controller="Pedido" asp-action= "ModificarPedido" method="post">
+        
         <input type="number" value=@item.Nro name="Nro" hidden>
         
         <input class="btn btn-primary" type="submit" value="Modificar">
@@ -57,6 +56,17 @@
     
 }
 </table>
+
+
+        <form asp-controller="Pedido" asp-action= "pedidosPorCliente" method="post">
+        
+        <input class="btn btn-success" type="submit" value="Pedidos Por Cliente"> 
+    </form>
+
+        <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
+        
+        <input class="btn btn-success" type="submit" value="Pedidos Por Cadete">
+    </form>
 
 
        

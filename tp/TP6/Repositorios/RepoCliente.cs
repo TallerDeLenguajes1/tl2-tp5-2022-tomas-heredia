@@ -27,7 +27,7 @@ namespace Repo
                 insertar.Parameters.AddWithValue("@nom", Cliente.nombre);
                 insertar.Parameters.AddWithValue("@dire", Cliente.direccion);
                 insertar.Parameters.AddWithValue("@tel", Cliente.telefono);
-                insertar.Parameters.AddWithValue("@dat", Cliente.DatosReferenciaDireccion);
+                insertar.Parameters.AddWithValue("@dat", Cliente.descripcion_Direccion);
                 try
                 {
                     insertar.ExecuteReader();
@@ -118,7 +118,7 @@ namespace Repo
                     select.Parameters.AddWithValue("@nom", Cliente.nombre);
                     select.Parameters.AddWithValue("@dire", Cliente.direccion);
                     select.Parameters.AddWithValue("@tel", Cliente.telefono);
-                    select.Parameters.AddWithValue("@des", Cliente.DatosReferenciaDireccion);
+                    select.Parameters.AddWithValue("@des", Cliente.descripcion_Direccion);
                     select.Parameters.AddWithValue("@Id",Cliente.id);
                     try
                     {

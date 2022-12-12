@@ -12,15 +12,7 @@ namespace ViewModels{
         public int id_cliente{get; set;}
         public string estado{get; set;} 
         public int id_cadete {get; set;} 
-        public P_ModificarViewModel(int n, string ob, int c, string e, int id_cadete){
-            Nro = n;
-            Obs = ob;
-            id_cliente = c;
-            estado = e;
-            this.id_cadete = id_cadete;
-        }
-         public P_ModificarViewModel(){
-            
-        }
+       
+        
     }
 }

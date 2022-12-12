@@ -15,14 +15,14 @@ using AutoMapper;
 
 namespace TP6.Controllers
 {
-    public class ClienteControler : Controller
+    public class ClienteController : Controller
     {
         private int id = 1;
-        private readonly ILogger<ClienteControler> _logger;
+        private readonly ILogger<ClienteController> _logger;
         private  List<Cliente> Clientes;
         private readonly IMapper _mapper;
         private readonly IRepoCliente _repClientes;
-        public ClienteControler(ILogger<ClienteControler> logger,IRepoCliente repClientes, IMapper mapper)
+        public ClienteController(ILogger<ClienteController> logger,IRepoCliente repClientes, IMapper mapper)
         {
             _logger = logger;
             _repClientes = repClientes;

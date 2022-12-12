@@ -15,10 +15,10 @@ namespace MyApp
         public string direccion{get; set;}
        
         public int telefono{get; set;}
-        public string DatosReferenciaDireccion{get; set;}
+        public string descripcion_Direccion{get; set;}
 
         public Cliente(int i, string n, string des, int t, string d){
-            DatosReferenciaDireccion = d;
+            descripcion_Direccion = d;
             id = i;
             nombre = n;
             direccion = des;
