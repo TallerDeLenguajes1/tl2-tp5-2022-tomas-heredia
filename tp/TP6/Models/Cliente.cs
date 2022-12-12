@@ -5,12 +5,24 @@ using System.Threading.Tasks;
 
 namespace MyApp
 {
-    public class Cliente: Persona
+    public class Cliente
     {
+         public int id; 
+        
+        public string nombre{get; set;}
+       
+
+        public string direccion{get; set;}
+       
+        public int telefono{get; set;}
         public string DatosReferenciaDireccion{get; set;}
 
-        public Cliente(int i, string n, string des, int t, string d):base( i,  n,  des,  t){
+        public Cliente(int i, string n, string des, int t, string d){
             DatosReferenciaDireccion = d;
+            id = i;
+            nombre = n;
+            direccion = des;
+            telefono = t;
         }
         public Cliente(){}
     }

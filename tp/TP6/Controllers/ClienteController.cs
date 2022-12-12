@@ -35,7 +35,7 @@ namespace TP6.Controllers
         }
         
         [HttpPost]
-        public IActionResult addCliente(ClienteViewModel nuevo)
+        public IActionResult addCliente(CL_IndexViewModel nuevo)
         {
             
             
@@ -46,7 +46,7 @@ namespace TP6.Controllers
             Clientes = _repClientes.ConsultaCliente();
 
             
-            return View("ListarClientes", _mapper.Map<List<ClienteViewModel>>(Clientes));
+            return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
 
         }
 
@@ -56,7 +56,23 @@ namespace TP6.Controllers
             _repClientes.EliminarCliente(id);
             List<Cliente> Clientes = new List<Cliente>();
             Clientes = _repClientes.ConsultaCliente();
-            return View("ListarClientes", _mapper.Map<List<ClienteViewModel>>(Clientes));
+            return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
+        }
+
+         [HttpPost]
+        public IActionResult ModificarCliente(int id){
+            Cliente nuevo = _repClientes.TomarCliente(id);
+            return View("ModificarCliente", _mapper.Map<CL_ModificarViewModel>(nuevo));
+            
+        }
+
+        [HttpPost]
+        public IActionResult Actualizar(CL_ModificarViewModel actualizado){
+            Cliente nuevo = _mapper.Map<Cliente>(actualizado);
+            _repClientes.ActualizarCliente(nuevo);
+           
+            Clientes = _repClientes.ConsultaCliente();
+            return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

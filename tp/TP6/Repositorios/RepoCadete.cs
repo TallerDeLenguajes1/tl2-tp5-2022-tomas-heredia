@@ -86,7 +86,52 @@ namespace Repo
 
 
         }
-
+    public Cadete TomarCadete(int id){
+         using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+            {
+                Cadete nuevo = new Cadete();
+                conexion.Open();
+                SqliteCommand insertar = new("SELECT * FROM Cadete WHERE Id = @Id ", conexion);
+                insertar.Parameters.AddWithValue("@Id",id);
+                var query = insertar.ExecuteReader();
+                 while (query.Read())
+                    {               
+                        var Telefono = 0;
+                    if (query["Telefono"] != System.DBNull.Value)
+                    {
+                        Telefono=Convert.ToInt32( query["Telefono"]);
+                    }
+                                                   //ID,          Nombre               Direc         Telefono           
+                     nuevo = new Cadete(query.GetInt32(0), query.GetString(1), query.GetString(3), Telefono);
+                    }
+                conexion.Close();
+                
+            return nuevo;
+            }
+    }
+    public void ActualizarCadete(Cadete Cadete){
+        using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+            {
+                    conexion.Open();
+                    SqliteCommand select = new SqliteCommand("UPDATE Cadete SET Nombre = @nom, Direccion = @dire, Telefono = @tel  WHERE ID = @id", conexion);
+                    select.Parameters.AddWithValue("@nom", Cadete.nombre);
+                    select.Parameters.AddWithValue("@dire", Cadete.direccion);
+                    select.Parameters.AddWithValue("@tel", Cadete.telefono);
+                    select.Parameters.AddWithValue("@Id",Cadete.id);
+                    try
+                    {
+                        select.ExecuteNonQuery();
+                        conexion.Close();
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        conexion.Close();
+                        
+                    }
+            }
+    }
 
     }
 }

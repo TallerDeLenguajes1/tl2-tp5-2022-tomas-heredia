@@ -31,7 +31,7 @@ namespace TP6.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult addPedido(PedidoVIewModels model)
+        public IActionResult addPedido(P_IndexViewModel model)
         {
 
 
@@ -43,7 +43,7 @@ namespace TP6.Controllers
 
             pedidos = _repPedidos.ConsultaPedido();
 
-            return View("ListarPedidos", _mapper.Map<List<PedidoVIewModels>>(pedidos));
+            return View("ListarPedidos", _mapper.Map<List<P_ListaViewModel>>(pedidos));
         }
 
         [HttpPost]
@@ -52,7 +52,7 @@ namespace TP6.Controllers
             _repPedidos.EliminarPedido(id);
             List<Pedido> pedidos = new List<Pedido>();
             pedidos = _repPedidos.ConsultaPedido();
-            return View("ListarPedidos",_mapper.Map<List<PedidoVIewModels>>(pedidos));
+            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
         }
 
         [HttpPost]
@@ -61,21 +61,37 @@ namespace TP6.Controllers
             _repPedidos.cambiarCadete(id,Nro);
             List<Pedido> pedidos = new List<Pedido>();
             pedidos = _repPedidos.ConsultaPedido();
-            return View("ListarPedidos",_mapper.Map<List<PedidoVIewModels>>(pedidos));
+            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
         }
 
         public IActionResult pedidosPorCadete(){
             MapperViewModel mapper = new MapperViewModel();
             List<Pedido> pedidos = new List<Pedido>();
             pedidos = _repPedidos.PedidoPorCadete();
-            return View("ListarPedidos",_mapper.Map<List<PedidoVIewModels>>(pedidos));
+            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
         }
 
         public IActionResult pedidosPorCliente(){
             MapperViewModel mapper = new MapperViewModel();
             List<Pedido> pedidos = new List<Pedido>();
             pedidos = _repPedidos.PedidoPorCliente();
-            return View("ListarPedidos",_mapper.Map<List<PedidoVIewModels>>(pedidos));
+            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+        }
+
+        [HttpPost]
+        public IActionResult ModificarPedido(int id){
+            Pedido nuevo = _repPedidos.TomarPedido(id);
+            return View("ModificarPedido", _mapper.Map<P_ModificarViewModel>(nuevo));
+            
+        }
+
+        [HttpPost]
+        public IActionResult Actualizar(P_ModificarViewModel actualizado){
+            Pedido nuevo = _mapper.Map<Pedido>(actualizado);
+            _repPedidos.ActualizarPedido(nuevo);
+           
+            pedidos = _repPedidos.ConsultaPedido();
+            return View("ListarClientes", _mapper.Map<List<P_ListaViewModel>>(pedidos));
         }
     }
 }

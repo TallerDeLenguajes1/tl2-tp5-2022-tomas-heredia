@@ -10,7 +10,9 @@ public interface IRepoCadete
 {
     bool cargarCadete(Cadete Cadete);
     bool EliminarCadete(int id);
-    List<Cadete>GetCadetes();
-
+    List<Cadete> GetCadetes();
+    
+    Cadete TomarCadete(int id);
+    void ActualizarCadete(Cadete Cadete);
     
 }

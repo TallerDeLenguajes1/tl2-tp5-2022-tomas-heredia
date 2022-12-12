@@ -10,11 +10,14 @@ public interface IRepoPedido
 {
     bool cargarPedido(Pedido Pedido);
     bool EliminarPedido(int Nro);
-    List<Pedido>ConsultaPedido();
+    List<Pedido> ConsultaPedido();
 
     void cambiarCadete(int id_nueva,int nro);
 
-    List<Pedido>PedidoPorCadete();
+    List<Pedido> PedidoPorCadete();
 
-    List<Pedido>PedidoPorCliente();
+    List<Pedido> PedidoPorCliente();
+
+    Pedido TomarPedido(int id);
+    void ActualizarPedido(Pedido Pedido);
 }

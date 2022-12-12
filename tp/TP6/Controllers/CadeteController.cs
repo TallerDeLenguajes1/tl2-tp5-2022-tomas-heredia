@@ -40,7 +40,7 @@ namespace TP6.Controllers
         
 
         [HttpPost]
-        public IActionResult addCadete(CadeteViewModel nuevo)
+        public IActionResult addCadete(C_IndexViewModel nuevo)
         {
             
             
@@ -51,7 +51,7 @@ namespace TP6.Controllers
             cadetes = _repCadetes.GetCadetes();
 
             
-            return View("ListarCadetes", _mapper.Map<List<CadeteViewModel>>(cadetes));
+            return View("ListarCadetes", _mapper.Map<List<C_ListaViewModel>>(cadetes));
 
         }
 
@@ -59,10 +59,27 @@ namespace TP6.Controllers
         public IActionResult bajaCadete(int id){
            
             _repCadetes.EliminarCadete(id);
-            List<Cadete> cadetes = new List<Cadete>();
+            
             cadetes = _repCadetes.GetCadetes();
-            return View("ListarCadetes", _mapper.Map<List<CadeteViewModel>>(cadetes));
+            return View("ListarCadetes", _mapper.Map<List<C_ListaViewModel>>(cadetes));
         }
+
+        [HttpPost]
+        public IActionResult ModificarCadete(int id){
+            Cadete nuevo = _repCadetes.TomarCadete(id);
+            return View("ModificarCadetes", _mapper.Map<C_ModificarViewModel>(nuevo));
+            
+        }
+
+        [HttpPost]
+        public IActionResult Actualizar(C_ModificarViewModel actualizado){
+            Cadete nuevo = _mapper.Map<Cadete>(actualizado);
+            _repCadetes.ActualizarCadete(nuevo);
+           
+            cadetes = _repCadetes.GetCadetes();
+            return View("ListarCadetes", _mapper.Map<List<C_ListaViewModel>>(cadetes));
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

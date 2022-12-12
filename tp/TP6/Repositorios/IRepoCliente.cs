@@ -10,7 +10,8 @@ public interface IRepoCliente
 {
     bool cargarCliente(Cliente Cliente);
     bool EliminarCliente(int id);
-    List<Cliente>ConsultaCliente();
+    List<Cliente> ConsultaCliente();
 
-    
+    Cliente TomarCliente(int id);
+    void ActualizarCliente(Cliente Cliente);
 }

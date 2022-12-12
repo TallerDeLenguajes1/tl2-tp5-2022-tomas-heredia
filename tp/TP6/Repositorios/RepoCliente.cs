@@ -94,6 +94,47 @@ namespace Repo
 
         }
 
+        public Cliente TomarCliente(int id){
+            Cliente nuevoCliente;
+             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+                {
+                conexion.Open();
+                SqliteCommand select = new SqliteCommand("SELECT * FROM Cliente where Id = @Id", conexion);
+                 select.Parameters.AddWithValue("@Id",id);
+                var query = select.ExecuteReader();
+                
+                                                //ID,          nombre               Direccion              Telefono        descripcion_direccion   
+                nuevoCliente = new Cliente(query.GetInt32(0), query.GetString(1), query.GetString(2),query.GetInt32(3), query.GetString(4));
+                    
+                conexion.Close();
+                }
+            return nuevoCliente;
+        }
+        public void ActualizarCliente(Cliente Cliente){
+            using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+            {
+                    conexion.Open();
+                    SqliteCommand select = new SqliteCommand("UPDATE Cliente SET Nombre = @nom, Direccion = @dire, Telefono = @tel, Descripcion_Direccion = @des  WHERE ID = @id", conexion);
+                    select.Parameters.AddWithValue("@nom", Cliente.nombre);
+                    select.Parameters.AddWithValue("@dire", Cliente.direccion);
+                    select.Parameters.AddWithValue("@tel", Cliente.telefono);
+                    select.Parameters.AddWithValue("@des", Cliente.DatosReferenciaDireccion);
+                    select.Parameters.AddWithValue("@Id",Cliente.id);
+                    try
+                    {
+                        select.ExecuteNonQuery();
+                        conexion.Close();
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        conexion.Close();
+                        
+                    }
+            }
+        }
+
 
     }
 }

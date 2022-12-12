@@ -5,15 +5,25 @@ using System.Threading.Tasks;
 
 namespace MyApp
 {
-    public class Cadete: Persona
+    public class Cadete
     {
+        public int id; 
         
+        public string nombre{get; set;}
+       
+
+        public string direccion{get; set;}
+       
+        public int telefono{get; set;}
         
         public List<Pedido> pedidos = new List<Pedido>();
-        public Cadete(int i, string n, string des, int t):base( i,  n,  des,  t){
-            
+        public Cadete(int i, string n, string des, int t){
+            id = i;
+            nombre = n;
+            direccion = des;
+            telefono = t;
         }
-        
+        public Cadete(){}
         public void addPedido(Pedido pedido){
             pedidos.Add(pedido);
         }

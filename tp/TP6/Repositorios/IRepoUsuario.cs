@@ -10,7 +10,7 @@ public interface IRepoUsuario
 {
     bool verificarUsuario(Usuario usuario);
     bool EliminarUsuario(int id);
-    List<Usuario>ConsultaUsuario();
+    List<Usuario> ConsultaUsuario();
 
     
 }

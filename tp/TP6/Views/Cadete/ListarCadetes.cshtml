@@ -1,4 +1,4 @@
-@model List<ViewModels.CadeteViewModel> 
+@model List<ViewModels.C_ListaViewModel> 
 
 <table class="table">
   <thead>
@@ -9,6 +9,7 @@
       <th scope="col">Telefono</th>
       <th scope="col">Jornal</th>
       <th scope="col">Borrar</th>
+      <th scope="col">Modificar</th>
     </tr>
   </thead>
 @foreach (var item in Model)
@@ -24,6 +25,13 @@
         <form asp-controller="Cadete" asp-action= "bajaCadete" method="post">
             <input type="number" value=@item.id name="id" hidden>
             <input  class="btn btn-danger" type="submit" value="Eliminar">
+            
+        </form>
+      </td>
+      <td>
+        <form asp-controller="Cadete" asp-action= "ModificarCadete" method="post">
+            <input type="number" value=@item.id name="id" hidden>
+            <input  class="btn btn-danger" type="submit" value="Modificar">
             
         </form>
       </td>

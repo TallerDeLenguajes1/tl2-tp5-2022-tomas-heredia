@@ -47,7 +47,7 @@ namespace Repo
 
         }
 
-        public List<Pedido>ConsultaPedido(){
+        public List<Pedido> ConsultaPedido(){
             List<Pedido> ListaPedidos = new List<Pedido>();
         
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
@@ -111,7 +111,7 @@ namespace Repo
             }
         }
 
-        public List<Pedido>PedidoPorCadete(){
+        public List<Pedido> PedidoPorCadete(){
             List<Pedido> ListaPedidos = new List<Pedido>();
         
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
@@ -128,7 +128,7 @@ namespace Repo
                 return ListaPedidos;
         } 
 
-         public List<Pedido>PedidoPorCliente(){
+         public List<Pedido> PedidoPorCliente(){
             List<Pedido> ListaPedidos = new List<Pedido>();
         
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
@@ -144,5 +144,47 @@ namespace Repo
                 }
                 return ListaPedidos;
         }
+ 
+         public Pedido TomarPedido(int id){
+            Pedido nuevoPedido;
+             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+                {
+                conexion.Open();
+                SqliteCommand select = new SqliteCommand("SELECT * FROM Pedido where Nro = @Id", conexion);
+                 select.Parameters.AddWithValue("@Id",id);
+                var query = select.ExecuteReader();
+                
+                                                //Nro,          Obs               Id_Clienre              Estado        Id_Cadete
+                nuevoPedido = new Pedido(query.GetInt32(0), query.GetString(1), query.GetInt32(2),query.GetString(3), query.GetInt32(4));
+                    
+                conexion.Close();
+                }
+            return nuevoPedido;
+        }
+        public void ActualizarPedido(Pedido Pedido){
+            using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+            {
+                conexion.Open();
+                SqliteCommand select = new SqliteCommand("UPDATE Pedido SET Obs = @obs, Id_cliente = @idcli, Estado = @est, Id_cadete = @idca  WHERE Nro = @nro", conexion);
+                select.Parameters.AddWithValue("@nro", Pedido.Nro);
+                select.Parameters.AddWithValue("@obs", Pedido.Obs);
+                select.Parameters.AddWithValue("@idcli", Pedido.id_cliente);
+                select.Parameters.AddWithValue("@idca", Pedido.id_cadete);
+                select.Parameters.AddWithValue("@est",Pedido.estado);
+                    try
+                    {
+                        select.ExecuteNonQuery();
+                        conexion.Close();
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        conexion.Close();
+                        
+                    }
+            }
+        }
+ 
     }
 }
