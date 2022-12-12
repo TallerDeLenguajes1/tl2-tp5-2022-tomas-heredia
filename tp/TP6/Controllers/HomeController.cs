@@ -18,6 +18,14 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult IndexCadete(){
+       
+            
+           
+            return RedirectToAction("Index","Cadete");
+        }
+
     public IActionResult Privacy()
     {
         return View();

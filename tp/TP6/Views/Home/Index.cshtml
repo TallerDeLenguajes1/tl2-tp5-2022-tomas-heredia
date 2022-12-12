@@ -5,4 +5,25 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div>
+    <form asp-controller="Home" asp-action= "IndexCadete" method="post">
+        
+    <input  class="btn btn-danger" type="submit" value="Cadetes">
+            
+</form>
+</div>
+<div>
+    <form asp-controller="Home" asp-action= "IndexCliente" method="post">
+        
+    <input  class="btn btn-danger" type="submit" value="Clientes">
+            
+</form>
+</div>
+<div>
+    <form asp-controller="Home" asp-action= "IndexPedido" method="post">
+        
+    <input  class="btn btn-danger" type="submit" value="Pedidos">
+            
+</form>
+</div>
 </div>

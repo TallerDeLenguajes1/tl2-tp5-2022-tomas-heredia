@@ -73,6 +73,7 @@ namespace TP6.Controllers
 
         [HttpPost]
         public IActionResult Actualizar(C_ModificarViewModel actualizado){
+           
             Cadete nuevo = _mapper.Map<Cadete>(actualizado);
             _repCadetes.ActualizarCadete(nuevo);
            

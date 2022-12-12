@@ -1,7 +1,10 @@
 using Repo;
+using AutoMapper;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
+//para automapper
+builder.Services.AddAutoMapper(typeof(Program));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

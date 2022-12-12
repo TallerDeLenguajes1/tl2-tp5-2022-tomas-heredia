@@ -113,7 +113,7 @@ namespace Repo
         using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                     conexion.Open();
-                    SqliteCommand select = new SqliteCommand("UPDATE Cadete SET Nombre = @nom, Direccion = @dire, Telefono = @tel  WHERE ID = @id", conexion);
+                    SqliteCommand select = new SqliteCommand("UPDATE Cadete SET Nombre = @nom, Direccion = @dire, Telefono = @tel  WHERE Id = @Id", conexion);
                     select.Parameters.AddWithValue("@nom", Cadete.nombre);
                     select.Parameters.AddWithValue("@dire", Cadete.direccion);
                     select.Parameters.AddWithValue("@tel", Cadete.telefono);

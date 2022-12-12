@@ -1,0 +1,39 @@
+@model ViewModels.CL_ModificarViewModel
+
+@{
+    ViewData["Title"] = "Cliente Page";
+}
+
+<div >
+    <form asp-controller="Cliente" asp-action= "Actualizar" method="post">
+
+        <legend>"Modificar Cliente"</legend>
+        
+        <div class="form-group">
+            <label asp-for="@Model.nombre" class="control-label">@Html.DisplayNameFor(Model => Model.nombre)</label>
+            <input asp-for="@Model.nombre" class="form-control">
+            <span asp-validation-for="@Model.nombre" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.direccion" class="control-label">@Html.DisplayNameFor(Model => Model.direccion)</label>
+            <input asp-for="@Model.direccion" class="form-control">
+            <span asp-validation-for="@Model.direccion" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="@Model.telefono" class="control-label">@Html.DisplayNameFor(Model => Model.telefono)</label>
+            <input asp-for="@Model.telefono" class="form-control">
+            <span asp-validation-for="@Model.telefono" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            
+            <label asp-for="@Model.descripcion_Direccion" class="control-label">@Html.DisplayNameFor(Model => Model.descripcion_Direccion)</label>
+            <input asp-for="@Model.descripcion_Direccion" class="form-control">
+            <span asp-validation-for="@Model.descripcion_Direccion" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+             <input type="number" value=@Model.id name="id" hidden>
+            <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />
+        </div>
+        @* <input asp-for="Id" value="0" type="hidden"/> *@
+    </form>
+</div>
