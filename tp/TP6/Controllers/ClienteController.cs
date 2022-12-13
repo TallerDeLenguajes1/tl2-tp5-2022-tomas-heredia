@@ -19,12 +19,14 @@ namespace TP6.Controllers
     {
         private int id = 1;
         private readonly ILogger<ClienteController> _logger;
+        
         private  List<Cliente> Clientes;
         private readonly IMapper _mapper;
         private readonly IRepoCliente _repClientes;
         public ClienteController(ILogger<ClienteController> logger,IRepoCliente repClientes, IMapper mapper)
         {
             _logger = logger;
+            
             _repClientes = repClientes;
             _mapper = mapper;
         }
@@ -33,6 +35,8 @@ namespace TP6.Controllers
         {
             return View();
         }
+
+        
         
         [HttpPost]
         public IActionResult addCliente(CL_IndexViewModel nuevo)
@@ -45,6 +49,7 @@ namespace TP6.Controllers
 
             Clientes = _repClientes.ConsultaCliente();
 
+            
             
             return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
 

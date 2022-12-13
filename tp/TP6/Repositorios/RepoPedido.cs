@@ -153,9 +153,12 @@ namespace Repo
                 SqliteCommand select = new SqliteCommand("SELECT * FROM Pedido where Nro = @Id", conexion);
                  select.Parameters.AddWithValue("@Id",id);
                 var query = select.ExecuteReader();
-                
+                Console.WriteLine( query.GetString(0));
+                Console.WriteLine( query.GetString(1));
+                Console.WriteLine( query.GetString(2));
+                Console.WriteLine( query.GetString(3));
                                                 //Nro,          Obs               Id_Clienre              Estado        Id_Cadete
-                nuevoPedido = new Pedido(query.GetInt32(0), query.GetString(1), query.GetInt32(2),query.GetString(3), query.GetInt32(4));
+                nuevoPedido = new Pedido(query.GetInt32(0), query.GetString(1), query.GetInt32(2), query.GetString(3),query.GetInt32(4));
                     
                 conexion.Close();
                 }

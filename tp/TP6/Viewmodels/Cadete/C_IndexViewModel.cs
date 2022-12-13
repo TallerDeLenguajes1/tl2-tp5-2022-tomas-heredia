@@ -15,5 +15,6 @@ namespace ViewModels
 
         public List<Pedido> pedidos = new List<Pedido>();
         
+        public float jornal{get;set;}
     }
 }

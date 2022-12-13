@@ -22,9 +22,14 @@ namespace TP6.Controllers
         private readonly ILogger<CadeteController> _logger;
         private readonly IRepoCadete _repCadetes;
         private readonly IMapper _mapper;
-        public CadeteController(ILogger<CadeteController> logger,IRepoCadete repCadetes, IMapper mapper)
+        private readonly ILogger<PedidoController> _loggerPedidos;
+        private  List<Pedido> Pedidos;
+        private readonly IRepoPedido _repPedidos;
+        public CadeteController(ILogger<CadeteController> logger,IRepoCadete repCadetes, IMapper mapper, ILogger<PedidoController> loggerPedido, IRepoPedido repPedidos)
         {
             _logger = logger;
+            _loggerPedidos = loggerPedido;
+            _repPedidos = repPedidos;
             _repCadetes = repCadetes;
             _mapper = mapper;
         }
@@ -37,6 +42,26 @@ namespace TP6.Controllers
             return View();
         }
 
+        public float JornalACobrar(int id){
+            float total = 0;
+            Pedidos = _repPedidos.ConsultaPedido();
+            foreach (var item in Pedidos)
+            {
+                if (item.id_cadete == id && item.estado == "entregado")
+                {
+                    total += 300;
+                }
+            }
+            return total;
+        }
+
+        public List <C_ListaViewModel> AplicarJornal(List <C_ListaViewModel> listaCadetes){
+            foreach (var item in listaCadetes)
+            {
+                item.jornal = JornalACobrar(item.id);
+            }
+            return listaCadetes;
+        }
         
 
         [HttpPost]
@@ -50,8 +75,11 @@ namespace TP6.Controllers
 
             cadetes = _repCadetes.GetCadetes();
 
-            
-            return View("ListarCadetes", _mapper.Map<List<C_ListaViewModel>>(cadetes));
+           List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+
+           modelo = AplicarJornal(modelo);
+
+            return View("ListarCadetes", modelo);
 
         }
 
@@ -61,7 +89,12 @@ namespace TP6.Controllers
             _repCadetes.EliminarCadete(id);
             
             cadetes = _repCadetes.GetCadetes();
-            return View("ListarCadetes", _mapper.Map<List<C_ListaViewModel>>(cadetes));
+
+            List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+
+           modelo = AplicarJornal(modelo);
+
+            return View("ListarCadetes", modelo);
         }
 
         [HttpPost]
@@ -78,7 +111,11 @@ namespace TP6.Controllers
             _repCadetes.ActualizarCadete(nuevo);
            
             cadetes = _repCadetes.GetCadetes();
-            return View("ListarCadetes", _mapper.Map<List<C_ListaViewModel>>(cadetes));
+
+            List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+
+           modelo = AplicarJornal(modelo);
+            return View("ListarCadetes", modelo);
         }
 
 
