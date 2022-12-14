@@ -95,7 +95,7 @@ namespace TP6.Controllers
             _repPedidos.ActualizarPedido(nuevo);
            
             pedidos = _repPedidos.ConsultaPedido();
-            return View("ListarClientes", _mapper.Map<List<P_ListaViewModel>>(pedidos));
+            return View("ListarPedidos", _mapper.Map<List<P_ListaViewModel>>(pedidos));
         }
     }
 }

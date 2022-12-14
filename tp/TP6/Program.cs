@@ -19,6 +19,8 @@ builder.Services.AddTransient<IRepoUsuario, RepoUsuario>();
 //para cookies
 builder.Services.AddDistributedMemoryCache();
 
+ 
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(100000);
@@ -26,8 +28,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 var app = builder.Build();
-//para cookies
-app.UseSession();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -40,7 +41,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+//para cookies
+app.UseSession();
+//app.MapRazorPages();
+app.MapDefaultControllerRoute();
 app.UseAuthorization();
 
 app.MapControllerRoute(

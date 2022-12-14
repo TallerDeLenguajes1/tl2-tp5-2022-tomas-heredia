@@ -43,7 +43,7 @@ namespace Repo
             }
 
         }
-        public List<Cliente>ConsultaCliente(){
+        public List<Cliente> ConsultaCliente(){
             List<Cliente> ListaClientes = new List<Cliente>();
         
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
@@ -65,7 +65,7 @@ namespace Repo
                 }
 
                                                               //ID,          Nombre               Direc         Telefono           descripcion
-                    ListaClientes.Add(new Cliente(query.GetInt32(0), query.GetString(1), query.GetString(3), Telefono, descripcion));
+                    ListaClientes.Add(new Cliente(query.GetInt32(0), query.GetString(1), query.GetString(2), Telefono, descripcion));
                     }
                 conexion.Close();
                 }
@@ -95,26 +95,38 @@ namespace Repo
         }
 
         public Cliente TomarCliente(int id){
-            Cliente nuevoCliente;
+            
              using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
                 {
+                    Cliente nuevoCliente = new Cliente();
                 conexion.Open();
                 SqliteCommand select = new SqliteCommand("SELECT * FROM Cliente where Id = @Id", conexion);
                  select.Parameters.AddWithValue("@Id",id);
                 var query = select.ExecuteReader();
-                
+                while (query.Read())
+                {
+                    var descripcion = "";
+                    if (query["Descripcion_Direccion"] != System.DBNull.Value)
+                    {
+                        descripcion= query["Descripcion_Direccion"].ToString();
+                    }
+                    var Telefono = 0;
+                    if (query["Telefono"] != System.DBNull.Value)
+                    {
+                        Telefono=Convert.ToInt32( query["Telefono"]);
+                    }
                                                 //ID,          nombre               Direccion              Telefono        descripcion_direccion   
-                nuevoCliente = new Cliente(query.GetInt32(0), query.GetString(1), query.GetString(2),query.GetInt32(3), query.GetString(4));
-                    
+                    nuevoCliente = new Cliente(query.GetInt32(0), query.GetString(1), query.GetString(2),Telefono, descripcion);
+                }   
                 conexion.Close();
+                return nuevoCliente;
                 }
-            return nuevoCliente;
         }
         public void ActualizarCliente(Cliente Cliente){
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                     conexion.Open();
-                    SqliteCommand select = new SqliteCommand("UPDATE Cliente SET Nombre = @nom, Direccion = @dire, Telefono = @tel, Descripcion_Direccion = @des  WHERE ID = @id", conexion);
+                    SqliteCommand select = new SqliteCommand("UPDATE Cliente SET Nombre = @nom, Direccion = @dire, Telefono = @tel, Descripcion_Direccion = @des  WHERE Id = @Id", conexion);
                     select.Parameters.AddWithValue("@nom", Cliente.nombre);
                     select.Parameters.AddWithValue("@dire", Cliente.direccion);
                     select.Parameters.AddWithValue("@tel", Cliente.telefono);

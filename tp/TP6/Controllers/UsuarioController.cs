@@ -21,9 +21,11 @@ namespace TP6.Controllers
 {
     public class UsuarioController : Controller
     {
+        public const string Usuario_UserName = "_Name";
+        public const string Usuario_Password= "_Age";
         private int id = 1;
         private readonly ILogger<UsuarioController> _logger;
-        private  List<Usuario> Clientes;
+        private  List<Usuario> Usuarios;
         private readonly IMapper _mapper;
         private readonly IRepoUsuario _repUsuario;
         public UsuarioController(ILogger<UsuarioController> logger,IRepoUsuario repUsuario, IMapper mapper)
@@ -45,22 +47,26 @@ namespace TP6.Controllers
             
             Usuario Usuario_ = _mapper.Map<Usuario>(nuevo);
 
-            _repUsuario.cargarUsuario(Usuario_);
-
-            Clientes = _repUsuario.ConsultaUsuario();
-
-            
-            return View("ListarUsuario", _mapper.Map<List<U_ListViewModel>>(Clientes));
-
+            Usuarios = _repUsuario.ConsultaUsuario();
+            foreach (var item in Usuarios)
+            {
+                if (item.usuario == Usuario_.usuario && item.contrasenia == Usuario_.contrasenia)
+                {
+                    HttpContext.Session.SetString(Usuario_UserName, Usuario_.usuario);
+                    HttpContext.Session.SetString(Usuario_Password, Usuario_.contrasenia);
+                    return RedirectToAction("Index","Home");
+                }
+            }
+            return View("Index");
         }
 
         [HttpPost]
         public IActionResult bajaUsuario(int id){
        
             _repUsuario.EliminarUsuario(id);
-            List<Usuario> Clientes = new List<Usuario>();
-            Clientes = _repUsuario.ConsultaUsuario();
-            return View("ListarUsuario", _mapper.Map<List<U_ListViewModel>>(Clientes));
+            List<Usuario> Usuarios = new List<Usuario>();
+            Usuarios = _repUsuario.ConsultaUsuario();
+            return View("ListarUsuario", _mapper.Map<List<U_ListViewModel>>(Usuarios));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

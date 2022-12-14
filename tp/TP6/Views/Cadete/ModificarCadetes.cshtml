@@ -20,14 +20,16 @@
             <span asp-validation-for="@Model.direccion" class="text-danger"></span>
         </div>
          <div class="form-group">
-            <label asp-for="@Model.telefono" class="control-label">@Html.DisplayNameFor(Model => Model.telefono)</label>
+            <label asp-for="@Model.telefono" class="control-label">@Html.DisplayNameFor(Model => Model.telefono) </label>
             <input asp-for="@Model.telefono" class="form-control">
             <span asp-validation-for="@Model.telefono" class="text-danger"></span>
         </div>
         <div class="form-group">
              <input type="number" value=@Model.id name="id" hidden>
+             
             <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />
         </div>
        
     </form>
 </div>
+

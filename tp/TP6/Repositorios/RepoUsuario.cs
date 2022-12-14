@@ -79,7 +79,7 @@ namespace Repo
                
 
                                                               //ID,          Nombre               usuario         contraseña           rol
-                    ListaUsuarios.Add(new Usuario(query.GetInt32(0), query.GetString(1), query.GetString(3), query.GetString(4), query.GetString(5)));
+                    ListaUsuarios.Add(new Usuario(query.GetInt32(0), query.GetString(1), query.GetString(2), query.GetString(4), query.GetString(5)));
                     }
                 conexion.Close();
                 }

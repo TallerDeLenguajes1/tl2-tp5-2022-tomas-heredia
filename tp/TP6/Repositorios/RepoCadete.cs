@@ -96,7 +96,7 @@ namespace Repo
                 var query = insertar.ExecuteReader();
                  while (query.Read())
                     {               
-                        var Telefono = 0;
+                    var Telefono = 0;
                     if (query["Telefono"] != System.DBNull.Value)
                     {
                         Telefono=Convert.ToInt32( query["Telefono"]);

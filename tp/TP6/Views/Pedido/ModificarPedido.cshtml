@@ -15,12 +15,14 @@
             <span asp-validation-for="@Model.Obs" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="@Model.estado" class="control-label">@Html.DisplayNameFor(Model => Model.Obs)</label>
+            <label asp-for="@Model.estado" class="control-label">@Html.DisplayNameFor(Model => Model.Obs )</label>
             <input asp-for="@Model.estado" class="form-control">
             <span asp-validation-for="@Model.estado" class="text-danger"></span>
         </div>
         <div class="form-group">
              <input type="number" value=@Model.Nro name="Nro" hidden>
+             <input type="number" value=@Model.id_cadete name="id_cadete" hidden>
+             <input type="number" value=@Model.id_cliente name="id_cliente" hidden>
             <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />
         </div>
         
