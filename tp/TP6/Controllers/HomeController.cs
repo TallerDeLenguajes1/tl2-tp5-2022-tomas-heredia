@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using TP6.Models;
 
+
+// Para session
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
 namespace TP6.Controllers;
 
 public class HomeController : Controller
@@ -15,7 +19,14 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return RedirectToAction("Index","Usuario");
+        
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+            return RedirectToAction("Index","Usuario"); 
+        }else
+        {
+            return View();
+            
+        }
     }
 
     [HttpPost]

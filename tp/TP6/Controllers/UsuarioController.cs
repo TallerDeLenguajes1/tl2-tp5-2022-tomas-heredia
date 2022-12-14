@@ -21,8 +21,9 @@ namespace TP6.Controllers
 {
     public class UsuarioController : Controller
     {
-        public const string Usuario_UserName = "_Name";
-        public const string Usuario_Password= "_Age";
+        public static string Usuario_UserName = "_Name";
+        public static string Usuario_Password= "_Password";
+        public static string Usuario_Rol= "_Rol";
         private int id = 1;
         private readonly ILogger<UsuarioController> _logger;
         private  List<Usuario> Usuarios;
@@ -47,17 +48,19 @@ namespace TP6.Controllers
             
             Usuario Usuario_ = _mapper.Map<Usuario>(nuevo);
 
-            Usuarios = _repUsuario.ConsultaUsuario();
-            foreach (var item in Usuarios)
+            
+
+            if (_repUsuario.verificarUsuario(Usuario_))
             {
-                if (item.usuario == Usuario_.usuario && item.contrasenia == Usuario_.contrasenia)
-                {
-                    HttpContext.Session.SetString(Usuario_UserName, Usuario_.usuario);
-                    HttpContext.Session.SetString(Usuario_Password, Usuario_.contrasenia);
-                    return RedirectToAction("Index","Home");
-                }
+                HttpContext.Session.SetString(Usuario_UserName, Usuario_.usuario);
+                HttpContext.Session.SetString(Usuario_Password, Usuario_.contrasenia);
+                HttpContext.Session.SetString(Usuario_Password, Usuario_.rol);
+                return RedirectToAction("Index","Home");
+            }else
+            {
+                
+                return View("Index");
             }
-            return View("Index");
         }
 
         [HttpPost]

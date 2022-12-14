@@ -46,7 +46,7 @@ namespace Repo
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                 conexion.Open();
-                SqliteCommand insertar = new("Select * from Usuario WHERE Usuario= @usuario and Contraseña = @contrasenia", conexion);
+                SqliteCommand insertar = new("Select * from Usuario WHERE Usuario= @usuario and Contrasenia = @contrasenia", conexion);
                
                 insertar.Parameters.AddWithValue("@usuario", Usuario.usuario);
                 insertar.Parameters.AddWithValue("@contrasenia", Usuario.contrasenia);
@@ -67,10 +67,11 @@ namespace Repo
 
         }
         public List<Usuario> ConsultaUsuario(){
-            List<Usuario> ListaUsuarios = new List<Usuario>();
         
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
                 {
+                    
+                List<Usuario> ListaUsuarios = new List<Usuario>();
                 conexion.Open();
                 SqliteCommand select = new SqliteCommand("SELECT * FROM Usuario", conexion);
                 var query = select.ExecuteReader();
@@ -82,8 +83,8 @@ namespace Repo
                     ListaUsuarios.Add(new Usuario(query.GetInt32(0), query.GetString(1), query.GetString(2), query.GetString(4), query.GetString(5)));
                     }
                 conexion.Close();
+                return ListaUsuarios;
                 }
-            return ListaUsuarios;
       } 
       public bool EliminarUsuario(int id){
               using (SqliteConnection conexion = new SqliteConnection(connectionString)) 

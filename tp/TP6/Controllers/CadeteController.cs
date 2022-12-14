@@ -45,7 +45,13 @@ namespace TP6.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                return View();
+                
+            }
         }
 
         public float JornalACobrar(int id){

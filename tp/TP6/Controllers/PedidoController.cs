@@ -32,7 +32,21 @@ namespace TP6.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                if (HttpContext.Session.GetString("_Rol") == "Administrador")
+                {
+                    
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index","Usuario"); 
+                }
+                
+            }
         }
         [HttpPost]
         public IActionResult addPedido(P_IndexViewModel model)

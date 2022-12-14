@@ -11,13 +11,13 @@ namespace ViewModels
     {
         [Required]
         public int id {get;set;}
-        [Required][StringLength(1000)] 
+        [Required][StringLength(45)] 
         public string nombre {get;set;}
-        [Required][StringLength(1000)] 
+        [Required][StringLength(45)] 
         public string usuario {get;set;}
-        [Required][StringLength(1000)] 
+        [Required][StringLength(45)] 
         public string contrasenia {get;set;}
-        [Required]
+        [Required][StringLength(45)]
         public string rol {get;set;}
 
 
