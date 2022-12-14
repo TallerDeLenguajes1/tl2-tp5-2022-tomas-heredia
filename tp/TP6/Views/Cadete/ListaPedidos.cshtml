@@ -1,4 +1,5 @@
-@model List<ViewModels.P_ListaViewModel> 
+@model List<ViewModels.C_PedidoViewModel> 
+
 @{
     ViewData["Title"] = "Pedido Page";
 }
@@ -12,9 +13,9 @@
       <th scope="col">Estado</th>
       <th scope="col">Id Cadete</th>
       <th scope="col">Id Cliente</th>
-      <th scope="col">Borrar</th>
-      <th scope="col">Modificar Id Cadete</th>
-      <th scope="col">Modificar Pedido</th>
+
+      <th scope="col">Modificar estado </th>
+      
     </tr>
   </thead>
 @foreach (var item in Model)
@@ -59,20 +60,4 @@
     
 }
 </table>
-
-
-        <form asp-controller="Pedido" asp-action= "pedidosPorCliente" method="post">
-        
-        <input class="btn btn-success" type="submit" value="Pedidos Por Cliente"> 
-    </form>
-
-        <form asp-controller="Pedido" asp-action= "pedidosPorCadete" method="post">
-        
-        <input class="btn btn-success" type="submit" value="Pedidos Por Cadete">
-    </form>
-
-
-       
-
-
 

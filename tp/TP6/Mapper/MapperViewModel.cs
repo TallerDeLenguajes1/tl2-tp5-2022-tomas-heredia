@@ -9,6 +9,7 @@ namespace Mappers
             CreateMap<Cadete,C_IndexViewModel>().ReverseMap();
             CreateMap<Cadete,C_ListaViewModel>().ReverseMap();
             CreateMap<Cadete,C_ModificarViewModel>().ReverseMap();
+            CreateMap<Pedido,C_PedidoViewModel>().ReverseMap();
             
             CreateMap<Cliente,CL_IndexViewModel>().ReverseMap();
             CreateMap<Cliente,CL_ListaViewModel>().ReverseMap();

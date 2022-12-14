@@ -1,31 +1,27 @@
-@model ViewModels.P_ModificarViewModel
+@model ViewModels.C_PedidoViewModel
 
 @{
     ViewData["Title"] = "Pedido Page";
 }
 
-<div >
-    <form asp-controller="Pedido" asp-action= "Actualizar" method="post">
 
-        <legend>"Modificar Pedido"</legend>
-        
-        <div class="form-group">
-            <label asp-for="@Model.Obs" class="control-label">@Html.DisplayNameFor(Model => Model.Obs)</label>
-            <input asp-for="@Model.Obs" class="form-control">
-            <span asp-validation-for="@Model.Obs" class="text-danger"></span>
-        </div>
+<div >
+    <form asp-controller="Cadete" asp-action= "CambiarEstado" method="post">
+
+        <legend>"Modificar Estado del Pedido"</legend>
         
         <div class="form-group">
             <label asp-for="@Model.estado" class="control-label">@Html.DisplayNameFor(Model => Model.estado )</label>
-            <select asp-for="@Model.estado" class="text-danger">
+            <input asp-for="@Model.estado" class="form-control">
+            <select asp-for="@Model.estado" class="form-control">
             <option value="Entregado">Entregado</option>
             <option value="Pendiente">Pendiente</option>
-            </select>
-            
+        </select>
             <span asp-validation-for="@Model.estado" class="text-danger"></span>
         </div>
         <div class="form-group">
              <input type="number" value=@Model.Nro name="Nro" hidden>
+             <input type="number" value=@Model.Obs name="Obs" hidden>
              <input type="number" value=@Model.id_cadete name="id_cadete" hidden>
              <input type="number" value=@Model.id_cliente name="id_cliente" hidden>
             <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />

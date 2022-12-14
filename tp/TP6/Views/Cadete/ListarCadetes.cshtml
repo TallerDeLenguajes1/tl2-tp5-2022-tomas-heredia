@@ -2,7 +2,7 @@
 
 @using Microsoft.AspNetCore.Session;
 @using Microsoft.AspNetCore.Http;
-@*using HttpContext.Session;*@
+
 <table class="table">
   <thead>
     <tr>
@@ -32,10 +32,16 @@
         </form>
       </td>
       <td>
+        <form asp-controller="Cadete" asp-action= "ModificarEstadoPedidos" method="post">
+            <input type="number" value=@item.id name="id" hidden>
+            <input  class="btn btn-danger" type="submit" value="Eliminar">
+            
+        </form>
+      </td>
+      <td>
         <form asp-controller="Cadete" asp-action= "ModificarCadete" method="post">
             <input type="number" value=@item.id name="id" hidden>
             <input  class="btn btn-danger" type="submit" value="Modificar">
-            
         </form>
       </td>
     </tr>

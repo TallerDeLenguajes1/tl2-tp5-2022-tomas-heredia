@@ -42,19 +42,21 @@ namespace TP6.Controllers
         }
         
         [HttpPost]
-        public IActionResult ControlUsuario(U_IndexViewModel nuevo)
+        public IActionResult ControlUsuario(U_IndexViewModel cargado)
         {
             
             
-            Usuario Usuario_ = _mapper.Map<Usuario>(nuevo);
+            Usuario Usuario_ = _mapper.Map<Usuario>(cargado);
 
             
 
             if (_repUsuario.verificarUsuario(Usuario_))
             {
-                HttpContext.Session.SetString(Usuario_UserName, Usuario_.usuario);
-                HttpContext.Session.SetString(Usuario_Password, Usuario_.contrasenia);
-                HttpContext.Session.SetString(Usuario_Password, Usuario_.rol);
+                Usuario nuevo = new Usuario();
+                nuevo = _repUsuario.TomarUsuario(Usuario_.contrasenia);
+                HttpContext.Session.SetString(Usuario_UserName, nuevo.usuario);
+                HttpContext.Session.SetString(Usuario_Password, nuevo.contrasenia);
+                HttpContext.Session.SetString(Usuario_Rol, nuevo.rol);
                 return RedirectToAction("Index","Home");
             }else
             {

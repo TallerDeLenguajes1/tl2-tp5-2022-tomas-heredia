@@ -20,5 +20,6 @@ namespace MyApp
             this.contrasenia = contrasenia;
             this.rol = rol;
         } 
+        public Usuario (){}
     }
 }

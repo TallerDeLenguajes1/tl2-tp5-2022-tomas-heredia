@@ -116,6 +116,7 @@ namespace TP6.Controllers
             
         }
 
+
         [HttpPost]
         public IActionResult Actualizar(C_ModificarViewModel actualizado){
            
@@ -127,9 +128,35 @@ namespace TP6.Controllers
             List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
 
            modelo = AplicarJornal(modelo);
-            return View("ListarCadetes", modelo);
+            return View("ListaPedidos", modelo);
         }
 
+        [HttpPost]
+        public IActionResult ModificarEstadoPedidos(int id){
+            Cadete cadete = _repCadetes.TomarCadete(id);
+            List<Pedido> AModificar = new List<Pedido>();
+            Pedidos = _repPedidos.ConsultaPedido();
+
+            foreach (var item in Pedidos)
+            {
+                if (item.id_cadete == cadete.id)
+                {
+                    AModificar.Add(item);
+                }
+            }
+
+            return View("ListaPedidos", _mapper.Map<List<C_PedidoViewModel>>(AModificar));
+            
+        }
+        [HttpPost]
+        public IActionResult CambiarEstado(C_PedidoViewModel actualizado){
+            Pedido nuevo = _mapper.Map<Pedido>(actualizado);
+            _repPedidos.ActualizarPedido(nuevo);
+           
+            Pedidos = _repPedidos.ConsultaPedido();
+            return View("ListarCadetes");
+
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

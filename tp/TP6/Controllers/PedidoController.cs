@@ -36,10 +36,11 @@ namespace TP6.Controllers
                 return RedirectToAction("Index","Usuario"); 
             }else
             {
+                string rol = HttpContext.Session.GetString("_Rol");
                 if (HttpContext.Session.GetString("_Rol") == "Administrador")
                 {
                     
-                    return View();
+                    return View("Index");
                 }
                 else
                 {

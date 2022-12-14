@@ -12,5 +12,5 @@ public interface IRepoUsuario
     bool EliminarUsuario(int id);
     List<Usuario> ConsultaUsuario();
     void cargarUsuario(Usuario usuario);
-    
+    Usuario TomarUsuario(string Contrasenia);
 }

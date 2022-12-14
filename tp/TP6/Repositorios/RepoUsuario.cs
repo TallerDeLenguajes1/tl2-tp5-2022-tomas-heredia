@@ -109,6 +109,26 @@ namespace Repo
 
         }
 
+        public Usuario TomarUsuario(string Contrasenia){
+            
+             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+                {
+                    Usuario nuevoUsuario = new Usuario();
+                conexion.Open();
+                SqliteCommand select = new SqliteCommand("SELECT * FROM Usuario where Contrasenia = @Cont", conexion);
+                 select.Parameters.AddWithValue("@Cont",Contrasenia);
+                var query = select.ExecuteReader();
+                while (query.Read())
+                {
+                   
+                                                //ID,                   nombre               usuario              contraseña        rol   
+                    nuevoUsuario = new Usuario(query.GetInt32(0), query.GetString(1), query.GetString(2),query.GetString(3), query.GetString(4));
+                }   
+                conexion.Close();
+                return nuevoUsuario;
+                }
+        }
+
 
     }
 }
