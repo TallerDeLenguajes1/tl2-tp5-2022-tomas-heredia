@@ -32,20 +32,14 @@ namespace TP6.Controllers
         }
         public IActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password)) && HttpContext.Session.GetString("_Rol") != "Administrador"){
                 return RedirectToAction("Index","Usuario"); 
             }else
             {
-                string rol = HttpContext.Session.GetString("_Rol");
-                if (HttpContext.Session.GetString("_Rol") == "Administrador")
-                {
+                
                     
-                    return View("Index");
-                }
-                else
-                {
-                    return RedirectToAction("Index","Usuario"); 
-                }
+                return View("Index");
+                
                 
             }
         }

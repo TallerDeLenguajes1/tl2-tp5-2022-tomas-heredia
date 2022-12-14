@@ -49,17 +49,34 @@ namespace TP6.Controllers
                 return RedirectToAction("Index","Usuario"); 
             }else
             {
-                return View();
+                cadetes = _repCadetes.GetCadetes();
+
+                List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+
+                modelo = AplicarJornal(modelo);
+
+                return View("ListarCadetes", modelo);
                 
             }
         }
 
+        [HttpPost]
+        public IActionResult CargarCadete(){
+             if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )|| HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","errorUsuario"); 
+            }else
+            {
+
+                return View("Index");
+                
+            }
+        }
         public float JornalACobrar(int id){
             float total = 0;
             Pedidos = _repPedidos.ConsultaPedido();
             foreach (var item in Pedidos)
             {
-                if (item.id_cadete == id && item.estado == "entregado")
+                if (item.id_cadete == id && item.estado == "Entregado")
                 {
                     total += 300;
                 }
@@ -79,82 +96,144 @@ namespace TP6.Controllers
         [HttpPost]
         public IActionResult addCadete(C_IndexViewModel nuevo)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )|| HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+
+                Cadete cadete_ = _mapper.Map<Cadete>(nuevo);
+
+                _repCadetes.cargarCadete(cadete_);
+
+                cadetes = _repCadetes.GetCadetes();
+
+            List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+
+            modelo = AplicarJornal(modelo);
+
+                return View("ListarCadetes", modelo);
+                
+                
+            }
             
             
-            Cadete cadete_ = _mapper.Map<Cadete>(nuevo);
-
-            _repCadetes.cargarCadete(cadete_);
-
-            cadetes = _repCadetes.GetCadetes();
-
-           List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
-
-           modelo = AplicarJornal(modelo);
-
-            return View("ListarCadetes", modelo);
 
         }
 
         [HttpPost]
         public IActionResult bajaCadete(int id){
+            var rol = HttpContext.Session.GetString("_Rol") ;
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )|| HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","errorUsuario"); 
+            }else
+            {
+
+                _repCadetes.EliminarCadete(id);
+                
+                cadetes = _repCadetes.GetCadetes();
+
+                List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+
+            modelo = AplicarJornal(modelo);
+
+                return View("ListarCadetes", modelo);
+                
+                
+            }
            
-            _repCadetes.EliminarCadete(id);
-            
-            cadetes = _repCadetes.GetCadetes();
-
-            List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
-
-           modelo = AplicarJornal(modelo);
-
-            return View("ListarCadetes", modelo);
         }
 
         [HttpPost]
         public IActionResult ModificarCadete(int id){
-            Cadete nuevo = _repCadetes.TomarCadete(id);
-            return View("ModificarCadetes", _mapper.Map<C_ModificarViewModel>(nuevo));
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )|| HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","errorUsuario"); 
+            }else
+            {
+
+                Cadete nuevo = _repCadetes.TomarCadete(id);
+                return View("ModificarCadetes", _mapper.Map<C_ModificarViewModel>(nuevo));
+               
+                
+            }
             
         }
 
 
         [HttpPost]
         public IActionResult Actualizar(C_ModificarViewModel actualizado){
-           
-            Cadete nuevo = _mapper.Map<Cadete>(actualizado);
-            _repCadetes.ActualizarCadete(nuevo);
-           
-            cadetes = _repCadetes.GetCadetes();
 
-            List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
 
-           modelo = AplicarJornal(modelo);
-            return View("ListaPedidos", modelo);
+
+                Cadete nuevo = _mapper.Map<Cadete>(actualizado);
+                _repCadetes.ActualizarCadete(nuevo);
+            
+                cadetes = _repCadetes.GetCadetes();
+
+                List <C_ListaViewModel> modelo = _mapper.Map<List<C_ListaViewModel>>(cadetes);
+
+            modelo = AplicarJornal(modelo);
+                return View("ListaPedidos", modelo);
+               
+                
+            }
+           
+        }
+
+         [HttpPost]
+        public IActionResult VerPedidos(int id){
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                Cadete cadete = _repCadetes.TomarCadete(id);
+                List<Pedido> AModificar = new List<Pedido>();
+                Pedidos = _repPedidos.ConsultaPedido();
+
+                foreach (var item in Pedidos)
+                {
+                    if (item.id_cadete == cadete.id)
+                    {
+                        AModificar.Add(item);
+                    }
+                }
+                return View("ListaPedidos", _mapper.Map<List<C_PedidoViewModel>>(AModificar));
+            }
+            
         }
 
         [HttpPost]
         public IActionResult ModificarEstadoPedidos(int id){
-            Cadete cadete = _repCadetes.TomarCadete(id);
-            List<Pedido> AModificar = new List<Pedido>();
-            Pedidos = _repPedidos.ConsultaPedido();
-
-            foreach (var item in Pedidos)
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+                return RedirectToAction("Index","Usuario"); 
+            }else
             {
-                if (item.id_cadete == cadete.id)
-                {
-                    AModificar.Add(item);
-                }
-            }
 
-            return View("ListaPedidos", _mapper.Map<List<C_PedidoViewModel>>(AModificar));
+                Pedido AModificar = _repPedidos.TomarPedido(id);
+                return View("ModificarPedidos", _mapper.Map<C_PedidoViewModel>(AModificar));
+                
+            }
             
         }
         [HttpPost]
         public IActionResult CambiarEstado(C_PedidoViewModel actualizado){
-            Pedido nuevo = _mapper.Map<Pedido>(actualizado);
-            _repPedidos.ActualizarPedido(nuevo);
-           
-            Pedidos = _repPedidos.ConsultaPedido();
-            return View("ListarCadetes");
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+
+                Pedido nuevo = _mapper.Map<Pedido>(actualizado);
+                _repPedidos.ActualizarPedido(nuevo);
+            
+                Pedidos = _repPedidos.ConsultaPedido();
+                return View("ListaPedidos",_mapper.Map<List<C_PedidoViewModel>>(Pedidos));
+
+            }
 
         }
 

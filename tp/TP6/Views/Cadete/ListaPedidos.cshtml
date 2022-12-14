@@ -29,31 +29,12 @@
       <td>@item.id_cadete</td>
       <td>@item.id_cliente</td>
       <td>
-        <form asp-controller="Pedido" asp-action= "bajaPedido" method="post">
+        <form asp-controller="Cadete" asp-action= "ModificarEstadoPedidos" method="post">
         <input type="number" value=@item.Nro name="id" hidden>
-        <input class="btn btn-danger" type="submit" value="Eliminar"></form>
+        <input class="btn btn-danger" type="submit" value="Cambiar estado"></form>
       </td>
       
-      <td>
-        <form asp-controller="Pedido" asp-action= "cambioCadete" method="post">
-        <div><input type="text" name="id"></div> 
-        <input type="number" value=@item.Nro name="Nro" hidden>
-        
-        <input class="btn btn-primary" type="submit" value="Modificar">
-        
-        
-    </form>
-      </td>
-      <td>
-        <form asp-controller="Pedido" asp-action= "ModificarPedido" method="post">
-        
-        <input type="number" value=@item.Nro name="id" hidden>
-        
-        <input class="btn btn-primary" type="submit" value="Modificar">
-        
-        
-    </form>
-      </td>
+     
     </tr>
    
   </tbody>

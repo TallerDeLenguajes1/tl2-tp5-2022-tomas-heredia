@@ -12,7 +12,6 @@
         
         <div class="form-group">
             <label asp-for="@Model.estado" class="control-label">@Html.DisplayNameFor(Model => Model.estado )</label>
-            <input asp-for="@Model.estado" class="form-control">
             <select asp-for="@Model.estado" class="form-control">
             <option value="Entregado">Entregado</option>
             <option value="Pendiente">Pendiente</option>
@@ -21,7 +20,7 @@
         </div>
         <div class="form-group">
              <input type="number" value=@Model.Nro name="Nro" hidden>
-             <input type="number" value=@Model.Obs name="Obs" hidden>
+             <input type="text" value=@Model.Obs name="Obs" hidden>
              <input type="number" value=@Model.id_cadete name="id_cadete" hidden>
              <input type="number" value=@Model.id_cliente name="id_cliente" hidden>
             <input class="btn btn-primary" type="submit" value="Guardar" class="btn btn-info" />
