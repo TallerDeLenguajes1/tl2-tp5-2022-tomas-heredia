@@ -8,6 +8,14 @@ builder.Services.AddAutoMapper(typeof(Program));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+
+
+// Para repositorio de cadetes (inyección de dependencia para el repositorio de cadetes)
+builder.Services.AddTransient<IRepoCadete, RepoCadete>();
+builder.Services.AddTransient<IRepoCliente, RepoCliente>();
+builder.Services.AddTransient<IRepoPedido, RepoPedido>();
+builder.Services.AddTransient<IRepoUsuario, RepoUsuario>();
 //para cookies
 builder.Services.AddDistributedMemoryCache();
 
@@ -17,14 +25,6 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
-
-
-// Para repositorio de cadetes (inyección de dependencia para el repositorio de cadetes)
-builder.Services.AddTransient<IRepoCadete, RepoCadete>();
-builder.Services.AddTransient<IRepoCliente, RepoCliente>();
-builder.Services.AddTransient<IRepoPedido, RepoPedido>();
-builder.Services.AddTransient<IRepoUsuario, RepoUsuario>();
 var app = builder.Build();
 //para cookies
 app.UseSession();

@@ -11,6 +11,10 @@ using MyApp;
 using Repo;
 using Mappers;
 using AutoMapper;
+
+// Para session
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
 namespace TP6.Controllers
 {
     public class PedidoController : Controller

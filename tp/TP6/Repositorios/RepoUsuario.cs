@@ -18,6 +18,29 @@ namespace Repo
         public RepoUsuario(){
         
         }
+        public void cargarUsuario(Usuario usuario){
+             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
+            {
+                conexion.Open();
+                SqliteCommand insertar = new("INSERT INTO Usuario (Nombre,Usuario,Contrasenia,rol) VALUES (@nom, @us, @con,@rol)", conexion);
+                insertar.Parameters.AddWithValue("@nom", usuario.nombre);
+                insertar.Parameters.AddWithValue("@us", usuario.usuario);
+                insertar.Parameters.AddWithValue("@con", usuario.contrasenia);
+                insertar.Parameters.AddWithValue("@rol", usuario.rol);
+                try
+                {
+                    insertar.ExecuteReader();
+                    conexion.Close();
+                    
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    conexion.Close();
+                    
+                }
+            }
+        }
 
         public bool verificarUsuario(Usuario Usuario){
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 

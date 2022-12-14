@@ -13,6 +13,10 @@ using Mappers;
 using Repo;
 using AutoMapper;
 
+// Para session
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
+
 namespace TP6.Controllers
 {
     public class UsuarioController : Controller
@@ -35,7 +39,7 @@ namespace TP6.Controllers
         }
         
         [HttpPost]
-        public IActionResult ControlUsuario(UsuarioViewModel nuevo)
+        public IActionResult ControlUsuario(U_IndexViewModel nuevo)
         {
             
             
@@ -46,7 +50,7 @@ namespace TP6.Controllers
             Clientes = _repUsuario.ConsultaUsuario();
 
             
-            return View("ListarUsuario", _mapper.Map<List<UsuarioViewModel>>(Clientes));
+            return View("ListarUsuario", _mapper.Map<List<U_ListViewModel>>(Clientes));
 
         }
 
@@ -56,7 +60,7 @@ namespace TP6.Controllers
             _repUsuario.EliminarUsuario(id);
             List<Usuario> Clientes = new List<Usuario>();
             Clientes = _repUsuario.ConsultaUsuario();
-            return View("ListarUsuario", _mapper.Map<List<UsuarioViewModel>>(Clientes));
+            return View("ListarUsuario", _mapper.Map<List<U_ListViewModel>>(Clientes));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -13,6 +13,10 @@ using Mappers;
 using Repo;
 using AutoMapper;
 
+// Para session
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
+
 namespace TP6.Controllers
 {
     public class ClienteController : Controller

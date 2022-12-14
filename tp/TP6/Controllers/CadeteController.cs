@@ -12,6 +12,10 @@ using ViewModels;
 using Mappers;
 using AutoMapper;
 using Repo;
+
+
+// Para session
+using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Http;
 namespace TP6.Controllers
 {
