@@ -37,20 +37,13 @@ namespace TP6.Controllers
 
         public IActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password) )){
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
                 return RedirectToAction("Index","Usuario"); 
             }else
             {
-                if (HttpContext.Session.GetString("_Rol") == "Administrador")
-                {
                     
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Index","Usuario"); 
-                }
-                
+                return View();
+              
             }
         }
 
@@ -75,27 +68,53 @@ namespace TP6.Controllers
 
         [HttpPost]
         public IActionResult bajaCliente(int id){
-       
-            _repClientes.EliminarCliente(id);
-            List<Cliente> Clientes = new List<Cliente>();
-            Clientes = _repClientes.ConsultaCliente();
-            return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
+            
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                    
+                _repClientes.EliminarCliente(id);
+                List<Cliente> Clientes = new List<Cliente>();
+                Clientes = _repClientes.ConsultaCliente();
+                return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
+                
+              
+            }
         }
 
          [HttpPost]
         public IActionResult ModificarCliente(int id){
-            Cliente nuevo = _repClientes.TomarCliente(id);
-            return View("ModificarCliente", _mapper.Map<CL_ModificarViewModel>(nuevo));
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                    
+                Cliente nuevo = _repClientes.TomarCliente(id);
+                return View("ModificarCliente", _mapper.Map<CL_ModificarViewModel>(nuevo));
+                
+              
+            }
             
         }
 
         [HttpPost]
         public IActionResult Actualizar(CL_ModificarViewModel actualizado){
-            Cliente nuevo = _mapper.Map<Cliente>(actualizado);
-            _repClientes.ActualizarCliente(nuevo);
-           
-            Clientes = _repClientes.ConsultaCliente();
-            return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                    
+                Cliente nuevo = _mapper.Map<Cliente>(actualizado);
+                _repClientes.ActualizarCliente(nuevo);
+            
+                Clientes = _repClientes.ConsultaCliente();
+                return View("ListarClientes", _mapper.Map<List<CL_ListaViewModel>>(Clientes));
+                
+              
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

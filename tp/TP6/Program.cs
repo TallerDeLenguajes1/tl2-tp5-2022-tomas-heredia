@@ -16,6 +16,7 @@ builder.Services.AddTransient<IRepoCadete, RepoCadete>();
 builder.Services.AddTransient<IRepoCliente, RepoCliente>();
 builder.Services.AddTransient<IRepoPedido, RepoPedido>();
 builder.Services.AddTransient<IRepoUsuario, RepoUsuario>();
+
 //para cookies
 builder.Services.AddDistributedMemoryCache();
 

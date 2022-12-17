@@ -32,7 +32,7 @@ namespace TP6.Controllers
         }
         public IActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password)) && HttpContext.Session.GetString("_Rol") != "Administrador"){
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password)) || HttpContext.Session.GetString("_Rol") != "Administrador"){
                 return RedirectToAction("Index","Usuario"); 
             }else
             {
@@ -46,65 +46,114 @@ namespace TP6.Controllers
         [HttpPost]
         public IActionResult addPedido(P_IndexViewModel model)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                    
+                Pedido nuevo = _mapper.Map<Pedido>(model);
+
+                
+                _repPedidos.cargarPedido(nuevo);
+
+                pedidos = _repPedidos.ConsultaPedido();
+
+                return View("ListarPedidos", _mapper.Map<List<P_ListaViewModel>>(pedidos));
+
+            }
 
 
-            
-            Pedido nuevo = _mapper.Map<Pedido>(model);
-
-            
-            _repPedidos.cargarPedido(nuevo);
-
-            pedidos = _repPedidos.ConsultaPedido();
-
-            return View("ListarPedidos", _mapper.Map<List<P_ListaViewModel>>(pedidos));
         }
 
         [HttpPost]
         public IActionResult bajaPedido(int id){
-           MapperViewModel mapper = new MapperViewModel();
-            _repPedidos.EliminarPedido(id);
-            List<Pedido> pedidos = new List<Pedido>();
-            pedidos = _repPedidos.ConsultaPedido();
-            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                MapperViewModel mapper = new MapperViewModel();
+                _repPedidos.EliminarPedido(id);
+                List<Pedido> pedidos = new List<Pedido>();
+                pedidos = _repPedidos.ConsultaPedido();
+                return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+
+            }
         }
 
         [HttpPost]
         public IActionResult cambioCadete(int id,int Nro){
-            MapperViewModel mapper = new MapperViewModel();
-            _repPedidos.cambiarCadete(id,Nro);
-            List<Pedido> pedidos = new List<Pedido>();
-            pedidos = _repPedidos.ConsultaPedido();
-            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                    
+                MapperViewModel mapper = new MapperViewModel();
+                _repPedidos.cambiarCadete(id,Nro);
+                List<Pedido> pedidos = new List<Pedido>();
+                pedidos = _repPedidos.ConsultaPedido();
+                return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+                
+              
+            }
         }
 
         public IActionResult pedidosPorCadete(){
-            MapperViewModel mapper = new MapperViewModel();
-            List<Pedido> pedidos = new List<Pedido>();
-            pedidos = _repPedidos.PedidoPorCadete();
-            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                MapperViewModel mapper = new MapperViewModel();
+                List<Pedido> pedidos = new List<Pedido>();
+                pedidos = _repPedidos.PedidoPorCadete();
+                return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+
+            }
         }
 
         public IActionResult pedidosPorCliente(){
-            MapperViewModel mapper = new MapperViewModel();
-            List<Pedido> pedidos = new List<Pedido>();
-            pedidos = _repPedidos.PedidoPorCliente();
-            return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                    
+                MapperViewModel mapper = new MapperViewModel();
+                List<Pedido> pedidos = new List<Pedido>();
+                pedidos = _repPedidos.PedidoPorCliente();
+                return View("ListarPedidos",_mapper.Map<List<P_ListaViewModel>>(pedidos));
+                
+              
+            }
         }
 
         [HttpPost]
         public IActionResult ModificarPedido(int id){
-            Pedido nuevo = _repPedidos.TomarPedido(id);
-            return View("ModificarPedido", _mapper.Map<P_ModificarViewModel>(nuevo));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                    
+                Pedido nuevo = _repPedidos.TomarPedido(id);
+                return View("ModificarPedido", _mapper.Map<P_ModificarViewModel>(nuevo));
+                
+              
+            }
             
         }
 
         [HttpPost]
         public IActionResult Actualizar(P_ModificarViewModel actualizado){
-            Pedido nuevo = _mapper.Map<Pedido>(actualizado);
-            _repPedidos.ActualizarPedido(nuevo);
-           
-            pedidos = _repPedidos.ConsultaPedido();
-            return View("ListarPedidos", _mapper.Map<List<P_ListaViewModel>>(pedidos));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_UserName)) && string.IsNullOrEmpty(HttpContext.Session.GetString(UsuarioController.Usuario_Password))||HttpContext.Session.GetString("_Rol") != "Administrador"){
+                return RedirectToAction("Index","Usuario"); 
+            }else
+            {
+                Pedido nuevo = _mapper.Map<Pedido>(actualizado);
+                _repPedidos.ActualizarPedido(nuevo);
+            
+                pedidos = _repPedidos.ConsultaPedido();
+                return View("ListarPedidos", _mapper.Map<List<P_ListaViewModel>>(pedidos));
+
+              
+            }
         }
     }
 }

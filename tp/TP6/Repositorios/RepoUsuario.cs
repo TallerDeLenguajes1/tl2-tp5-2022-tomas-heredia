@@ -46,7 +46,8 @@ namespace Repo
             using (SqliteConnection conexion = new SqliteConnection(connectionString)) 
             {
                 conexion.Open();
-                SqliteCommand insertar = new("Select * from Usuario WHERE Usuario= @usuario and Contrasenia = @contrasenia", conexion);
+                SqliteCommand insertar = new("Select * from Usuario WHERE Usuario= @usuario and Contrasenia = @contrasenia",
+                 conexion);
                
                 insertar.Parameters.AddWithValue("@usuario", Usuario.usuario);
                 insertar.Parameters.AddWithValue("@contrasenia", Usuario.contrasenia);
